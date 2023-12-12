@@ -30,4 +30,3 @@ namespace hastane_.Controllers
         }
     }
 }
-//slmslmslm
