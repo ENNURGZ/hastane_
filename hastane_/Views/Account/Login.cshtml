@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Login";
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Giriş";
 }
 
 
@@ -13,15 +14,15 @@
     <div class="col-4 offset-4">
         <form>
             <div class="form-group mb-3">
-                <label class="form-label">Username</label>
-                <input class="form-control" placeholder="johndoe" />           
+                <label class="form-label">Kullanıcı Adı</label>
+                <input class="form-control"/>           
             </div>
             <div class="form-group mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" class="form-control" placeholder="P@ssW0rd!" />        
+                <label class="form-label">Şifre</label>
+                <input type="password" class="form-control"/>        
             </div>
             <div class="form-group d-grid mb-3">
-                <button type="submit" class="btn btn-primary d-block">Login</button>
+                <button type="submit" class="btn btn-primary d-block">Giriş Yap</button>
             </div>
         </form>
     </div>
