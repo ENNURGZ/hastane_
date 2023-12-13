@@ -23,6 +23,15 @@ namespace hastane_.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //REGİSTER İŞLEMLERİ
+            }
+            return View();
+        }
         public IActionResult Profile()
         {
             return View();
