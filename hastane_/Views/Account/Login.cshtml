@@ -1,1 +1,29 @@
-﻿
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Giriş";
+}
+
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display-4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <form>
+            <div class="form-group mb-3">
+                <label class="form-label">Kullanıcı Adı</label>
+                <input class="form-control"/>           
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Şifre</label>
+                <input type="password" class="form-control"/>        
+            </div>
+            <div class="form-group d-grid mb-3">
+                <button type="submit" class="btn btn-primary d-block">Giriş Yap</button>
+            </div>
+        </form>
+    </div>
+</div>
