@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using hastane_.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace hastane_.Controllers
 {
@@ -8,6 +9,16 @@ namespace hastane_.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //login işlemleri
+            }
+            return View(model);
+        }
+
         public IActionResult Register()
         {
             return View();

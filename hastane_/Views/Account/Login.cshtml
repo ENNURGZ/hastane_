@@ -12,17 +12,23 @@
 
 <div class="row">
     <div class="col-4 offset-4">
-        <form>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
             <div class="form-group mb-3">
-                <label class="form-label">Kullanıcı Adı</label>
-                <input class="form-control"/>           
+                <label asp-for="Username" class="form-label">Kullanıcı Adı</label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger small"></span>
             </div>
+
             <div class="form-group mb-3">
-                <label class="form-label">Şifre</label>
-                <input type="password" class="form-control"/>        
+                <label asp-for="Password" class="form-label">Şifre</label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
             </div>
+
             <div class="form-group d-grid mb-3">
-                <button type="submit" class="btn btn-primary d-block">Giriş Yap</button>
+                <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>Giriş Yap</button>
             </div>
         </form>
     </div>
