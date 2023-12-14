@@ -6,12 +6,7 @@ namespace hastane_.Controllers
 {
     public class AccountController : Controller
     {
-        //private readonly DatabaseContext _databaseContext;
-
-        /*public AccountController(DatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }*/
+        
 
         public IActionResult Login()
         {
@@ -36,22 +31,7 @@ namespace hastane_.Controllers
         {
             if (ModelState.IsValid)
             {
-                /*Hasta hasta = new()
-                {
-
-                    Username = model.Username,
-                    Password = model.Password,
-                };
-                k.Add(hasta);
-                int affectedRowCount = k.SaveChanges();
-                if (affectedRowCount == 0)
-                {
-                    ModelState.AddModelError("", "Hasta eklenemedi.");
-                }
-                else
-                {
-                    return RedirectToAction(nameof(Login));
-                }*/
+                
             }
             return View(model);
         }
