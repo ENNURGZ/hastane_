@@ -4,6 +4,14 @@ namespace hastane_.Models
 {
     public class RegisterViewModel
     {
+        [Required(ErrorMessage = "Name is required.")]
+        [MinLength(0, ErrorMessage = "İsim giriniz.")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Surname is required.")]
+        [MinLength(0, ErrorMessage = "Soyisim giriniz.")]
+        public string Surname { get; set; }
+
         //[Display(Name ="Kullanıcı Adı", Prompt ="johndoe")]
         [Required(ErrorMessage = "Username is required.")]
         [StringLength(30, ErrorMessage = "Username can be max 30 characters.")]
