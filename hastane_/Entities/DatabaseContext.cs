@@ -1,7 +1,7 @@
 ﻿using hastane_.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication2.Entities
+namespace hastane_.Entities
 {
     public class DatabaseContext : DbContext
     {
