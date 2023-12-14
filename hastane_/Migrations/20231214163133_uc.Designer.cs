@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using hastane_.Entities;
 
@@ -11,9 +12,10 @@ using hastane_.Entities;
 namespace hastane_.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231214163133_uc")]
+    partial class uc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,13 +104,12 @@ namespace hastane_.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FullName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<bool>("Locked")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -119,11 +120,6 @@ namespace hastane_.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -144,7 +140,7 @@ namespace hastane_.Migrations
                         .IsRequired();
 
                     b.HasOne("hastane_.Entities.User", "User")
-                        .WithMany("Randevular")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -155,11 +151,6 @@ namespace hastane_.Migrations
                 });
 
             modelBuilder.Entity("hastane_.Entities.Doctor", b =>
-                {
-                    b.Navigation("Randevular");
-                });
-
-            modelBuilder.Entity("hastane_.Entities.User", b =>
                 {
                     b.Navigation("Randevular");
                 });

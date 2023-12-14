@@ -9,9 +9,12 @@ namespace hastane_.Entities
     {
         [Key]
         public Guid Id { get; set; }
-
-        [StringLength(50)]
-        public string? FullName { get; set; } = null;
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Surname { get; set; } 
 
         [Required]
         [StringLength(30)]
@@ -28,5 +31,7 @@ namespace hastane_.Entities
         [Required]
         [StringLength(50)]
         public string Role { get; set; } = "user";
+
+        public ICollection<Randevu> Randevular { get; set; } //bir hasta birden çok randevu
     }
 }

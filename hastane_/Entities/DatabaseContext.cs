@@ -10,5 +10,8 @@ namespace hastane_.Entities
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Randevu> Randevular { get; set; }
+
     }
 }

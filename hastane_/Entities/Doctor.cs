@@ -1,4 +1,4 @@
-﻿/*using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace hastane_.Entities
@@ -34,7 +34,6 @@ namespace hastane_.Entities
         [StringLength(50)]
         public string? Poliklinik { get; set; } = null;
     
-        public ICollection<Randevu> Randevular { get; set; }
+        public ICollection<Randevu> Randevular { get; set; } //bir doktor birden çok randevu
     }
 }
-*/
