@@ -10,4 +10,4 @@ namespace hastane_.Entities
         public DbSet<User> Users { get; set; }
 
     }
-}
+}//
