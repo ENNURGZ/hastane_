@@ -1,12 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using hastane_.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace hastane_.Entities
+namespace WebApplication2.Entities
 {
-    public class DatabaseContext:DbContext
+    public class DatabaseContext : DbContext
     {
+        public DatabaseContext(DbContextOptions options) : base(options)
         {
         }
 
         public DbSet<User> Users { get; set; }
     }
-}//
+}
