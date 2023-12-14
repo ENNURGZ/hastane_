@@ -1,12 +1,17 @@
 
+using hastane_.Entities;
 using hastane_.Models;
-
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-
+builder.Services.AddDbContext<DatabaseContext>(opts =>
+{
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    //opts.UseLazyLoadingProxies();
+});
 
 var app = builder.Build();
 
