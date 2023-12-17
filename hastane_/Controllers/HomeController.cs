@@ -1,4 +1,5 @@
 ﻿using hastane_.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -19,6 +20,10 @@ namespace hastane_.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult AccessDenied()
         {
             return View();
         }

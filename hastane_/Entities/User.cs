@@ -32,6 +32,6 @@ namespace hastane_.Entities
         [StringLength(50)]
         public string Role { get; set; } = "user";
 
-        public ICollection<Randevu> Randevular { get; set; } //bir hasta birden çok randevu
+        public ICollection<Randevu>? Randevular { get; set; } //bir hasta birden çok randevu
     }
 }

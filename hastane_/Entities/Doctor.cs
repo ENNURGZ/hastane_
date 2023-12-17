@@ -34,6 +34,6 @@ namespace hastane_.Entities
         [StringLength(50)]
         public string? Poliklinik { get; set; } = null;
     
-        public ICollection<Randevu> Randevular { get; set; } //bir doktor birden çok randevu
+        public ICollection<Randevu>? Randevular { get; set; } //bir doktor birden çok randevu
     }
 }

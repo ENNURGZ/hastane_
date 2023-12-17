@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using NETCore.Encrypt.Extensions;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace hastane_.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly DatabaseContext _databaseContext;
@@ -18,10 +20,13 @@ namespace hastane_.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
+
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(LoginViewModel model)  //Login işlemleri
         {
@@ -66,17 +71,14 @@ namespace hastane_.Controllers
             return View(model);
 
         }
-            
-        
 
-    internal class model
-    {
-    }
-
-    public IActionResult Register()
+        [AllowAnonymous]
+        public IActionResult Register()
         {
             return View();
         }
+
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Register(RegisterViewModel model)
         {
