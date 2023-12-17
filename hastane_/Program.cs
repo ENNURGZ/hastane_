@@ -1,6 +1,7 @@
 
 using hastane_.Entities;
 using hastane_.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,29 @@ builder.Services.AddDbContext<DatabaseContext>(opts =>
     opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     //opts.UseLazyLoadingProxies();
 });
+
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddDbContext<DatabaseContext>(opts=>
+{
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    //opts.UseLazyLoadingProxies();
+});
+
+builder.Services
+               .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(opts =>
+               {
+                   opts.Cookie.Name = ".hastane_.auth";
+                   opts.ExpireTimeSpan = TimeSpan.FromDays(7);
+                   opts.SlidingExpiration = false;
+                   opts.LoginPath = "/Account/Login";
+                   opts.LogoutPath = "/Account/Logout";
+                   opts.AccessDeniedPath = "/Home/AccessDenied";
+               });
+
+
+
+
 
 var app = builder.Build();
 
@@ -27,6 +51,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

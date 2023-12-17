@@ -1,7 +1,10 @@
 ﻿using hastane_.Entities;
 using hastane_.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using NETCore.Encrypt.Extensions;
+using System.Security.Claims;
 
 namespace hastane_.Controllers
 {
@@ -20,16 +23,57 @@ namespace hastane_.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public IActionResult Login(LoginViewModel model)  //Login işlemleri
         {
             if (ModelState.IsValid)
             {
-                //login işlemleri
-            }
-            return View(model);
-        }
+                string md5Salt = _configuration.GetValue<string>("AppSettings:MD5Salt");
+                string saltedPassword = model.Password + md5Salt;
+                string hashedPassword = saltedPassword.MD5();
 
-        public IActionResult Register()
+                User user = _databaseContext.Users.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower()
+                && x.Password == hashedPassword);
+               
+                if (user != null)
+                {
+                    if (user.Locked)
+                    {
+                        ModelState.AddModelError(nameof(model.Username), "User is locked.");
+                        return View(model);
+                    }
+
+                    List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Name, user.Name ?? string.Empty));
+                    claims.Add(new Claim(ClaimTypes.Name, user.Surname ?? string.Empty));
+                    claims.Add(new Claim(ClaimTypes.Role, user.Role));
+                    claims.Add(new Claim("Username", user.Username));
+
+                    ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Username or password is incorrect.");
+                }
+            }
+
+            return View(model);
+
+        }
+            
+        
+
+    internal class model
+    {
+    }
+
+    public IActionResult Register()
         {
             return View();
         }
@@ -48,6 +92,7 @@ namespace hastane_.Controllers
                     string md5Salt = _configuration.GetValue<string>("AppSettings:MD5Salt");
                     string saltedPassword = model.Password + md5Salt;
                     string hashedPassword = saltedPassword.MD5();
+
                     User user = new()
                     {
                         Name = model.Name,
@@ -74,6 +119,11 @@ namespace hastane_.Controllers
         public IActionResult Profile()
         {
             return View();
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction(nameof(Login));
         }
     }
 }
