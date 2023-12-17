@@ -8,7 +8,7 @@ namespace hastane_.Entities
     {
         [Key]
         public Guid RandevuId { get; set; }
-        public Guid UserId { get; set; }
+        public Guid Id { get; set; }
         public User User { get; set; } //bir randevu bir hasta
 
         public Guid DoctorId { get; set; }

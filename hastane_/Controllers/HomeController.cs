@@ -14,6 +14,7 @@ namespace hastane_.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
