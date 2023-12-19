@@ -149,7 +149,8 @@ namespace hastane_.Controllers
                 user.Username = username;
                 _databaseContext.SaveChanges();
 
-                return RedirectToAction(nameof(Profile));
+                ViewData["result"] = "UsernameChanged";
+                //return RedirectToAction(nameof(Profile));
             }
             ProfileInfoLoader();
             return View("Profile");

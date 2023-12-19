@@ -23,7 +23,12 @@
                     <input name="username" type="text" class="form-control" value="@ViewData["Username"]" />
                     <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Save</button>
                 </div>
+                @if (ViewData["result"] != null && ViewData["result"] == "UsernameChanged")
+                {
+                    <span class="text-success small">Username updated.</span>
+                }
             </div>
+
         </form>
 
         <form method="post" asp-action="ProfileChangePassword">
@@ -42,4 +47,18 @@
 
     </div>
 </div>
+
+
+@section Scripts {
+    @if (ViewData["result"] != null)
+    {
+        <script>
+            var result = "@ViewData["result"]";
+            if (result == "PasswordChanged" || result == "UsernameChanged") {
+                toastr["success"]("İşlem başarıyla gerçekleştirildi.", "Başarılı!");
+            }
+        </script>
+    }
+}
+
 
