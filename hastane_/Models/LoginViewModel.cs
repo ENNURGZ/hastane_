@@ -9,7 +9,7 @@ namespace hastane_.Models
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Şifre Geçersiz.")]
-        [MinLength(6, ErrorMessage = "Şifre En Az 6 Karakter Olmalıdır.")]
+        [MinLength(3, ErrorMessage = "Şifre En Az 3 Karakter Olmalıdır.")]
         [MaxLength(16, ErrorMessage = "Şifre En Fazla 16 Karakter Olabilir.")]
         public string Password { get; set; }
     }

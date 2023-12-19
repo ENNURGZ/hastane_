@@ -19,12 +19,12 @@ namespace hastane_.Models
 
         //[DataType(DataType.Password)]
         [Required(ErrorMessage = "Şifre Eşleşmiyor.")]
-        [MinLength(6, ErrorMessage = "Şifre En Az 6 Karakter Olmalıdır.")]
+        [MinLength(3, ErrorMessage = "Şifre En Az 6 Karakter Olmalıdır.")]
         [MaxLength(16, ErrorMessage = "Şifre En Fazla 16 Karakter Olabilir.")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Şifre Eşleşmiyor.")]
-        [MinLength(6, ErrorMessage = "Şifre En Az 6 Karakter Olmalıdır.")]
+        [MinLength(3, ErrorMessage = "Şifre En Az 6 Karakter Olmalıdır.")]
         [MaxLength(16, ErrorMessage = "Şifre En Fazla 16 Karakter Olabilir.")]
         [Compare(nameof(Password))]
         public string RePassword { get; set; }

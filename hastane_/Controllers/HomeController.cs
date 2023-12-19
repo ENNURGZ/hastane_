@@ -13,8 +13,7 @@ namespace hastane_.Controllers
         {
             _logger = logger;
         }
-
-        [Authorize]
+        
         public IActionResult Index()
         {
             return View();
@@ -28,7 +27,7 @@ namespace hastane_.Controllers
         {
             return View();
         }
-
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

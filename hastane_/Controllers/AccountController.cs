@@ -58,7 +58,7 @@ namespace hastane_.Controllers
                     ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -105,7 +105,8 @@ namespace hastane_.Controllers
                         Name = model.Name,
                         Surname = model.Surname,
                         Username = model.Username,
-                        Password = hashedPassword
+                        Password = hashedPassword,
+                        Role = "user"
                     };
 
                     _databaseContext.Users.Add(user);

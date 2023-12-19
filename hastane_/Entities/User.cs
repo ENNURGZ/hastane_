@@ -9,6 +9,7 @@ namespace hastane_.Entities
     {
         [Key]
         public Guid Id { get; set; }
+
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
@@ -26,12 +27,9 @@ namespace hastane_.Entities
 
         public bool Locked { get; set; } = false;
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-
         [Required]
         [StringLength(50)]
-        public string Role { get; set; } = "user";
-
-        public ICollection<Randevu>? Randevular { get; set; } //bir hasta birden çok randevu
+        public string Role { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }
