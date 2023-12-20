@@ -29,7 +29,8 @@ namespace hastane_.Entities
 
         [Required]
         [StringLength(50)]
-        public string Role { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string Role { get; set; } = "user";
+
+        public ICollection<Randevu> Randevular { get; set; } //bir hasta birden çok randevu
     }
 }

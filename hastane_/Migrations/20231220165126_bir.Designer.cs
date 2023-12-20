@@ -12,8 +12,8 @@ using hastane_.Entities;
 namespace hastane_.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231214163133_uc")]
-    partial class uc
+    [Migration("20231220165126_bir")]
+    partial class bir
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,9 +24,9 @@ namespace hastane_.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("hastane_.Entities.Doctor", b =>
+            modelBuilder.Entity("hastane_.Entities.Admin", b =>
                 {
-                    b.Property<Guid>("DoctorId")
+                    b.Property<Guid>("AdminId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -43,9 +43,55 @@ namespace hastane_.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Poliklinik")
+                    b.Property<string>("Role")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("AdminId");
+
+                    b.ToTable("Adminler");
+                });
+
+            modelBuilder.Entity("hastane_.Entities.Doctor", b =>
+                {
+                    b.Property<Guid>("DoctorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan>("BaslangicSaati")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("BitisSaati")
+                        .HasColumnType("time");
+
+                    b.Property<int>("CalismaGunu")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Locked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("PoliklinikId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -54,8 +100,8 @@ namespace hastane_.Migrations
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -64,7 +110,27 @@ namespace hastane_.Migrations
 
                     b.HasKey("DoctorId");
 
+                    b.HasIndex("PoliklinikId");
+
                     b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("hastane_.Entities.Poliklinik", b =>
+                {
+                    b.Property<int>("PoliklinikId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PoliklinikId"), 1L, 1);
+
+                    b.Property<string>("PoliklinikAdi")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("PoliklinikId");
+
+                    b.ToTable("Poliklinikler");
                 });
 
             modelBuilder.Entity("hastane_.Entities.Randevu", b =>
@@ -76,21 +142,20 @@ namespace hastane_.Migrations
                     b.Property<Guid>("DoctorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Poliklinik")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("RandevuTarihi")
+                    b.Property<DateTime>("RandevuGunu")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<TimeSpan>("RandevuSaati")
+                        .HasColumnType("time");
 
                     b.HasKey("RandevuId");
 
                     b.HasIndex("DoctorId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("Id");
 
                     b.ToTable("Randevular");
                 });
@@ -101,15 +166,13 @@ namespace hastane_.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FullName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<bool>("Locked")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -121,6 +184,11 @@ namespace hastane_.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -129,6 +197,17 @@ namespace hastane_.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("hastane_.Entities.Doctor", b =>
+                {
+                    b.HasOne("hastane_.Entities.Poliklinik", "Poliklinik")
+                        .WithMany("Doctors")
+                        .HasForeignKey("PoliklinikId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Poliklinik");
                 });
 
             modelBuilder.Entity("hastane_.Entities.Randevu", b =>
@@ -140,8 +219,8 @@ namespace hastane_.Migrations
                         .IsRequired();
 
                     b.HasOne("hastane_.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithMany("Randevular")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -151,6 +230,16 @@ namespace hastane_.Migrations
                 });
 
             modelBuilder.Entity("hastane_.Entities.Doctor", b =>
+                {
+                    b.Navigation("Randevular");
+                });
+
+            modelBuilder.Entity("hastane_.Entities.Poliklinik", b =>
+                {
+                    b.Navigation("Doctors");
+                });
+
+            modelBuilder.Entity("hastane_.Entities.User", b =>
                 {
                     b.Navigation("Randevular");
                 });

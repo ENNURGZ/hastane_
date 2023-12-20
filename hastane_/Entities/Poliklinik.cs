@@ -10,8 +10,9 @@ namespace hastane_.Entities
         public int PoliklinikId { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string PoliklinikAdi { get; set; }
 
+        public ICollection<Doctor> Doctors { get; set; }
     }
 }

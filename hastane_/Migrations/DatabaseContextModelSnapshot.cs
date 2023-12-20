@@ -22,9 +22,48 @@ namespace hastane_.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("hastane_.Entities.CalismaSaati", b =>
+            modelBuilder.Entity("hastane_.Entities.Admin", b =>
                 {
-                    b.Property<Guid>("CalismaSaatiId")
+                    b.Property<Guid>("AdminId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Locked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("AdminId");
+
+                    b.ToTable("Adminler");
+                });
+
+            modelBuilder.Entity("hastane_.Entities.Doctor", b =>
+                {
+                    b.Property<Guid>("DoctorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -37,39 +76,39 @@ namespace hastane_.Migrations
                     b.Property<int>("CalismaGunu")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<bool>("Locked")
+                        .HasColumnType("bit");
 
-                    b.HasKey("CalismaSaatiId");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("CalismaSaatleri");
-                });
-
-            modelBuilder.Entity("hastane_.Entities.Doctor", b =>
-                {
-                    b.Property<Guid>("DoctorId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CalismaSaatiId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PoliklinikId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("DoctorId");
 
-                    b.HasIndex("CalismaSaatiId");
-
                     b.HasIndex("PoliklinikId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Doctors");
                 });
@@ -84,8 +123,8 @@ namespace hastane_.Migrations
 
                     b.Property<string>("PoliklinikAdi")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("PoliklinikId");
 
@@ -101,18 +140,20 @@ namespace hastane_.Migrations
                     b.Property<Guid>("DoctorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("PoliklinikId")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("RandevuTarihi")
+                    b.Property<DateTime>("RandevuGunu")
                         .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("RandevuSaati")
+                        .HasColumnType("time");
 
                     b.HasKey("RandevuId");
 
                     b.HasIndex("DoctorId");
 
-                    b.HasIndex("PoliklinikId");
+                    b.HasIndex("Id");
 
                     b.ToTable("Randevular");
                 });
@@ -122,9 +163,6 @@ namespace hastane_.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<bool>("Locked")
                         .HasColumnType("bit");
@@ -161,29 +199,13 @@ namespace hastane_.Migrations
 
             modelBuilder.Entity("hastane_.Entities.Doctor", b =>
                 {
-                    b.HasOne("hastane_.Entities.CalismaSaati", "CalismaSaati")
-                        .WithMany("Doctors")
-                        .HasForeignKey("CalismaSaatiId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("hastane_.Entities.Poliklinik", "Poliklinik")
-                        .WithMany()
+                        .WithMany("Doctors")
                         .HasForeignKey("PoliklinikId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("hastane_.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CalismaSaati");
-
                     b.Navigation("Poliklinik");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("hastane_.Entities.Randevu", b =>
@@ -194,23 +216,28 @@ namespace hastane_.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("hastane_.Entities.Poliklinik", "Poliklinik")
-                        .WithMany()
-                        .HasForeignKey("PoliklinikId")
+                    b.HasOne("hastane_.Entities.User", "User")
+                        .WithMany("Randevular")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Doctor");
 
-                    b.Navigation("Poliklinik");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("hastane_.Entities.CalismaSaati", b =>
+            modelBuilder.Entity("hastane_.Entities.Doctor", b =>
+                {
+                    b.Navigation("Randevular");
+                });
+
+            modelBuilder.Entity("hastane_.Entities.Poliklinik", b =>
                 {
                     b.Navigation("Doctors");
                 });
 
-            modelBuilder.Entity("hastane_.Entities.Doctor", b =>
+            modelBuilder.Entity("hastane_.Entities.User", b =>
                 {
                     b.Navigation("Randevular");
                 });
