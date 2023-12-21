@@ -13,4 +13,6 @@ namespace hastane_.Models
         [MaxLength(16, ErrorMessage = "Şifre En Fazla 16 Karakter Olabilir.")]
         public string Password { get; set; }
     }
+
+
 } 

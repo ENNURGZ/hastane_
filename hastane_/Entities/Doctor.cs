@@ -10,14 +10,30 @@ namespace hastane_.Entities
         [Key]
         public Guid DoctorId { get; set; }
 
-        //[ForeignKey("Id")]
-        public Guid Id { get; set; }
-        public User User { get; set; }
+        public string Name { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Surname { get; set; }
+
+        [Required]
+        [StringLength(30)]
+        public string Username { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Password { get; set; }
+
+        public bool Locked { get; set; } = false;
+
+        [Required]
+        [StringLength(50)]
+        public string Role { get; set; } = "doctor";
         public int PoliklinikId { get; set; }
         public Poliklinik Poliklinik { get; set; }
-        public Guid CalismaSaatiId { get; set; }
-        public CalismaSaati CalismaSaati { get; set; }
+        public DayOfWeek CalismaGunu { get; set; }
+        public TimeSpan BaslangicSaati { get; set; }
+        public TimeSpan BitisSaati { get; set; }
 
-        public ICollection<Randevu>? Randevular { get; set; } //bir doktor birden çok randevu
+        public ICollection<Randevu> Randevular { get; set; } //bir doktor birden çok randevu
     }
 }

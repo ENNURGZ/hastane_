@@ -29,4 +29,4 @@ namespace hastane_.Models
         [Compare(nameof(Password))]
         public string RePassword { get; set; }
     }
-}
+} 

@@ -9,8 +9,25 @@ namespace hastane_.Entities
         [Key]
         public Guid AdminId { get; set; }
 
-        //[ForeignKey("Id")]
-        public Guid Id { get; set; }
-        public User User { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Surname { get; set; }
+
+        [Required]
+        [StringLength(30)]
+        public string Username { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Password { get; set; }
+
+        public bool Locked { get; set; } = false;
+
+        [Required]
+        [StringLength(50)]
+        public string Role { get; set; } = "admin";
     }
 }
