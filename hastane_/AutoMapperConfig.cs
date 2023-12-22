@@ -8,7 +8,7 @@ namespace hastane_
     {
         public AutoMapperConfig()
         {
-            CreateMap<User, UserModel>().ReverseMap();  
+            CreateMap<User, UserModel>().ReverseMap();
         }
     }
 }
