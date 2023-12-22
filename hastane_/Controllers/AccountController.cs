@@ -63,7 +63,7 @@ namespace hastane_.Controllers
                     
                     return RedirectToAction("Index", "Home");
                 }
-                if (admin != null)
+                if (admin != null && user==null)
                 {
                     if (admin.Locked)
                     {
