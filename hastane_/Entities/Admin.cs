@@ -7,7 +7,7 @@ namespace hastane_.Entities
     public class Admin
     {
         [Key]
-        public Guid AdminId { get; set; }
+        public Guid AdminId { get; set; } 
 
         [Required]
         [StringLength(100)]

@@ -37,6 +37,8 @@ namespace hastane_.Controllers
 
                 User user = _databaseContext.Users.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower()
                 && x.Password == hashedPassword);
+                Admin admin = _databaseContext.Adminler.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower()
+                && x.Password == hashedPassword);
 
                 if (user != null)
                 {
@@ -60,6 +62,29 @@ namespace hastane_.Controllers
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                     
                     return RedirectToAction("Index", "Home");
+                }
+                if (admin != null)
+                {
+                    if (admin.Locked)
+                    {
+                        ModelState.AddModelError(nameof(model.Username), "Admin is locked.");
+                        return View(model);
+                    }
+
+                    List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, admin.AdminId.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Name, admin.Name ?? string.Empty));
+                    claims.Add(new Claim(ClaimTypes.Name, admin.Surname ?? string.Empty));
+                    claims.Add(new Claim(ClaimTypes.Role, admin.Role));
+                    claims.Add(new Claim("Username", admin.Username));
+
+                    ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                    return RedirectToAction("Index", "Admin");
                 }
                 else
                 {
@@ -110,6 +135,51 @@ namespace hastane_.Controllers
                     };
 
                     _databaseContext.Users.Add(user);
+                    int affectedRowCount = _databaseContext.SaveChanges();
+
+                    if (affectedRowCount == 0)
+                    {
+                        ModelState.AddModelError("", "Kullanıcı Eklenemedi.");
+                    }
+                    else
+                    {
+                        return RedirectToAction(nameof(Login));
+                    }
+                }
+            }
+            return View(model);
+        }
+        [AllowAnonymous]
+        public IActionResult AdminKaydi()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult AdminKaydi(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_databaseContext.Adminler.Any(x => x.Username.ToLower() == model.Username.ToLower()))
+                {
+                    ModelState.AddModelError(nameof(model.Username), "Username is already exists.");
+                    View(model);
+                }
+                else
+                {
+                    string hashedPassword = DoMD5HashedString(model.Password);
+
+                    Admin admin = new()
+                    {
+                        Name = model.Name,
+                        Surname = model.Surname,
+                        Username = model.Username,
+                        Password = hashedPassword,
+                        Role = "admin"
+                    };
+
+                    _databaseContext.Adminler.Add(admin);
                     int affectedRowCount = _databaseContext.SaveChanges();
 
                     if (affectedRowCount == 0)
