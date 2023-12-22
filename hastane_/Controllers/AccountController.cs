@@ -7,6 +7,7 @@ using NETCore.Encrypt.Extensions;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 
 namespace hastane_.Controllers
 {
@@ -63,7 +64,7 @@ namespace hastane_.Controllers
                     
                     return RedirectToAction("Index", "Home");
                 }
-                if (admin != null && user==null)
+                if (user == null && admin != null)
                 {
                     if (admin.Locked)
                     {
