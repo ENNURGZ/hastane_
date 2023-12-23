@@ -32,5 +32,7 @@ namespace hastane_.Entities
                 .WithMany(p => p.Doctors)
                 .HasForeignKey(d => d.PoliklinikId);
         }
-    }
+        
+
+    }  
 }

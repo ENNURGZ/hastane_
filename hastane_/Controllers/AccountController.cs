@@ -43,6 +43,8 @@ namespace hastane_.Controllers
                 && x.Password == hashedPassword);
                 Admin admin = _databaseContext.Adminler.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower()
                 && x.Password == hashedPassword);
+                Doctor doctor = _databaseContext.Doctors.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower()
+                && x.Password == hashedPassword);
 
                 if (user != null && admin==null)
                 {
@@ -89,6 +91,29 @@ namespace hastane_.Controllers
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
                     return RedirectToAction("Index", "Admin");
+                }
+                if (doctor != null && admin == null)
+                {
+                    if (doctor.Locked)
+                    {
+                        ModelState.AddModelError(nameof(model.Username), "Doctor is locked.");
+                        return View(model);
+                    }
+
+                    List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, doctor.DoctorId.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Name, doctor.Name ?? string.Empty));
+                    claims.Add(new Claim(ClaimTypes.Name, doctor.Surname ?? string.Empty));
+                    claims.Add(new Claim(ClaimTypes.Role, doctor.Role));
+                    claims.Add(new Claim("Username", doctor.Username));
+
+                    ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                    return RedirectToAction("Index", "Doctor");
                 }
                 else
                 {
@@ -153,58 +178,13 @@ namespace hastane_.Controllers
             }
             return View(model);
         }
-        [Authorize(Roles = "admin")]
-        public IActionResult UserEkle()
-        {
-            return View();
-        }
-
-        [Authorize(Roles = "admin")]
-        [HttpPost]
-        public IActionResult UserEkle(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (_databaseContext.Users.Any(x => x.Username.ToLower() == model.Username.ToLower()))
-                {
-                    ModelState.AddModelError(nameof(model.Username), "Username is already exists.");
-                    View(model);
-                }
-                else
-                {
-                    string hashedPassword = DoMD5HashedString(model.Password);
-
-                    User user = new()
-                    {
-                        Name = model.Name,
-                        Surname = model.Surname,
-                        Username = model.Username,
-                        Password = hashedPassword,
-                        Role = "user"
-                    };
-
-                    _databaseContext.Users.Add(user);
-                    int affectedRowCount = _databaseContext.SaveChanges();
-
-                    if (affectedRowCount == 0)
-                    {
-                        ModelState.AddModelError("", "Kullanıcı Eklenemedi.");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index","User");
-                    }
-                }
-            }
-            return View(model);
-        }
-
+        
         [Authorize(Roles = "admin")]
         public IActionResult AdminKaydi()
         {
             return View();
         }
-
+        
         [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AdminKaydi(AdminListViewModel model)
