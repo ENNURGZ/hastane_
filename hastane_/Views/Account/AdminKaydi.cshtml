@@ -1,4 +1,4 @@
-﻿@model AdminKaydiViewModel
+﻿@model RegisterViewModel
 @{
     ViewData["Title"] = "Admin Kaydı";
 }
@@ -14,7 +14,8 @@
     <div class="col-4 offset-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
-
+            </br>
+            </br>
             <div class="form-group mb-3">
                 <label asp-for="Name" class="form-label">İsim</label>
                 <input asp-for="Name" class="form-control" />
