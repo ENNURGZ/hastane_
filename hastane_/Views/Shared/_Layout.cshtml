@@ -13,7 +13,7 @@
     <meta name="author" content="" />
     <title>Freelancer - Start Bootstrap Theme</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="~/assest/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -34,7 +34,7 @@
                         {
                         <a class="navbar-brand" asp-controller="Admin" asp-action="Index">ASEN HOSPITAL</a>
                     }
-                    else
+                   else
 
                     {
                        <a class="navbar-brand" asp-controller="Home" asp-action="Index">ASEN HOSPITAL</a>
@@ -61,9 +61,7 @@
                         {
                             if (User.IsInRole("admin"))
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
-                                </li>
+                               
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded " asp-action="Index" asp-controller="Admin" role="button" 
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -103,6 +101,7 @@
                     }
                     else
                     {
+                       
                          <li class="nav-item ms-auto">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#portfolio">Portfolio</a>
                             </li>
@@ -110,7 +109,7 @@
                             <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#about" >About</a>
                             </li>
                         <li class="nav-item ms-auto">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Login">Giriş Yap</a>
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Login">Giriş Yap</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Register">Kayıt Ol</a>

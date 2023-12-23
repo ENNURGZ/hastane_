@@ -64,7 +64,7 @@ namespace hastane_.Controllers
                     ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                    
+
                     return RedirectToAction("Index", "Home");
                 }
                 if (user == null && admin != null)
@@ -337,11 +337,11 @@ namespace hastane_.Controllers
         [HttpPost]
         public IActionResult ProfileChangeUsername([Required][StringLength(30)] string username)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 Guid userid = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 User user = _databaseContext.Users.SingleOrDefault(x => x.Id == userid);
-        
+
                 user.Username = username;
                 _databaseContext.SaveChanges();
 
@@ -398,7 +398,7 @@ namespace hastane_.Controllers
                 user.Password = hashedPassword;
                 _databaseContext.SaveChanges();
 
-                ViewData["result"]="PasswordChanged";
+                ViewData["result"] = "PasswordChanged";
             }
             ProfileInfoLoader();
             return View("Profile");
@@ -409,4 +409,6 @@ namespace hastane_.Controllers
             return RedirectToAction(nameof(Login));
         }
     }
+
+   
 }
