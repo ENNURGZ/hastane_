@@ -24,5 +24,29 @@ namespace hastane_.Controllers
                 .Select(x => _mapper.Map<UserModel>(x)).ToList();
             return View(users);
         }
+        [Authorize(Roles = "admin")]
+        public IActionResult DoctorList()
+        {
+            List<DoctorListViewModel> doctors =
+                _databaseContext.Doctors.ToList()
+                .Select(x => _mapper.Map<DoctorListViewModel>(x)).ToList();
+            return View(doctors);
+        }
+        [Authorize(Roles = "admin")]
+        public IActionResult AdminList()
+        {
+            List<AdminListViewModel> adminler =
+                _databaseContext.Adminler.ToList()
+                .Select(x => _mapper.Map<AdminListViewModel>(x)).ToList();
+            return View(adminler);
+        }
+        [Authorize(Roles = "admin")]
+        public IActionResult PoliklinikList()
+        {
+            List<PoliklinikListViewModel> poliklinikler =
+                _databaseContext.Poliklinikler.ToList()
+                .Select(x => _mapper.Map<PoliklinikListViewModel>(x)).ToList();
+            return View(poliklinikler);
+        }
     }
 }

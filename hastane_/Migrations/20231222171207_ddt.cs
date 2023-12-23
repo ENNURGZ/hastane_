@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace hastane_.Migrations
 {
-    public partial class bir : Migration
+    public partial class ddt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

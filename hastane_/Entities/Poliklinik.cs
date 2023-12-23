@@ -11,7 +11,7 @@ namespace hastane_.Entities
 
         [Required]
         [StringLength(100)]
-        public string PoliklinikAdi { get; set; }
+        public string? PoliklinikAdi { get; set; }
 
         public ICollection<Doctor> Doctors { get; set; }
     }

@@ -9,7 +9,6 @@ namespace hastane_.Entities
 
         [Key]
         public Guid DoctorId { get; set; }
-
         public string Name { get; set; }
         [Required]
         [StringLength(100)]

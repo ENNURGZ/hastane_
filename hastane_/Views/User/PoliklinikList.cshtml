@@ -1,0 +1,32 @@
+﻿@model List<PoliklinikListViewModel>
+@{
+    ViewData["Title"] = "Poliklinikler";
+}
+
+<div class="row mb-3">
+    <div class="col">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Poliklinik Adı</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (PoliklinikListViewModel poliklinik in Model)
+                {
+                    <tr>
+                        <td>@poliklinik.PoliklinikId</td>
+                        <td>@poliklinik.PoliklinikAdi</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

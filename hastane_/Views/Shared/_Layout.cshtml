@@ -53,18 +53,9 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    < class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto">
 
-                    
-                    @if (User.Identity.IsAuthenticated)
-                      {
-                        if (User.IsInRole("user"))
-                        {
-                           <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="">Randevu Al</a>
-                           </li>
-                        }
-                      }
+ 
 
                     @if (User.Identity.IsAuthenticated)
                         {
@@ -78,11 +69,11 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                         İşlemler</a>
                                     <ul class="dropdown-menu">
-                                        <li><a asp-action="AdminKaydi" asp-controller="Account" class="dropdown-item">Admin Ekle</a></li>
-                                        <li><a asp-action="AdminDuzenle" asp-controller="Account" class="dropdown-item">Admin Düzenle</a></li>
+                                        <li><a asp-action="AdminList" asp-controller="User" class="dropdown-item">Adminler</a></li>
                                         <li><a asp-action="Index" asp-controller="User" class="dropdown-item">Kullanıcılar</a></li>
-                                        <li><a asp-action="Index" asp-controller="Doctor" class="dropdown-item">Doktorlar</a></li>
+                                        <li><a asp-action="DoctorList" asp-controller="User" class="dropdown-item">Doktorlar</a></li>
                                         <li><a asp-action="Index" asp-controller="Randevu" class="dropdown-item">Randevular</a></li>
+                                        <li><a asp-action="PoliklinikList" asp-controller="User" class="dropdown-item">Poliklinikler</a></li>
                                     </ul>
                                 </li>
                             }
@@ -98,6 +89,9 @@
                             }
                             if (User.IsInRole("user"))
                             {
+                                <li class="nav-item">
+                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Randevu" asp-action="Index">Randevu Al</a>
+                                </li>
                                 <li class="nav-item ms-auto">
                                     <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Profile">Profili Düzenle</a>
                                </li>

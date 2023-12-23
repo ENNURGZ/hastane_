@@ -12,8 +12,8 @@ using hastane_.Entities;
 namespace hastane_.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231221221548_bir")]
-    partial class bir
+    [Migration("20231222171207_ddt")]
+    partial class ddt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

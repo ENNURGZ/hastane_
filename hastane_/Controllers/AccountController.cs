@@ -8,6 +8,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
+using AutoMapper;
 
 namespace hastane_.Controllers
 {
@@ -15,11 +16,13 @@ namespace hastane_.Controllers
     public class AccountController : Controller
     {
         private readonly DatabaseContext _databaseContext;
+        private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        public AccountController(DatabaseContext databaseContext, IConfiguration configuration)
+        public AccountController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
         {
             _databaseContext = databaseContext;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -41,7 +44,7 @@ namespace hastane_.Controllers
                 Admin admin = _databaseContext.Adminler.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower()
                 && x.Password == hashedPassword);
 
-                if (user != null)
+                if (user != null && admin==null)
                 {
                     if (user.Locked)
                     {
@@ -150,15 +153,61 @@ namespace hastane_.Controllers
             }
             return View(model);
         }
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        public IActionResult UserEkle()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public IActionResult UserEkle(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_databaseContext.Users.Any(x => x.Username.ToLower() == model.Username.ToLower()))
+                {
+                    ModelState.AddModelError(nameof(model.Username), "Username is already exists.");
+                    View(model);
+                }
+                else
+                {
+                    string hashedPassword = DoMD5HashedString(model.Password);
+
+                    User user = new()
+                    {
+                        Name = model.Name,
+                        Surname = model.Surname,
+                        Username = model.Username,
+                        Password = hashedPassword,
+                        Role = "user"
+                    };
+
+                    _databaseContext.Users.Add(user);
+                    int affectedRowCount = _databaseContext.SaveChanges();
+
+                    if (affectedRowCount == 0)
+                    {
+                        ModelState.AddModelError("", "Kullanıcı Eklenemedi.");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index","User");
+                    }
+                }
+            }
+            return View(model);
+        }
+
+        [Authorize(Roles = "admin")]
         public IActionResult AdminKaydi()
         {
             return View();
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
         [HttpPost]
-        public IActionResult AdminKaydi(RegisterViewModel model)
+        public IActionResult AdminKaydi(AdminListViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -189,9 +238,84 @@ namespace hastane_.Controllers
                     }
                     else
                     {
-                        return RedirectToAction(nameof(Login));
+                        return RedirectToAction("AdminList", "User");
                     }
                 }
+            }
+            return View(model);
+        }
+        [Authorize(Roles = "admin")]
+        public IActionResult DoctorKaydi()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public IActionResult DoctorKaydi(DoctorListViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_databaseContext.Doctors.Any(x => x.Username.ToLower() == model.Username.ToLower()))
+                {
+                    ModelState.AddModelError(nameof(model.Username), "Username is already exists.");
+                    View(model);
+                }
+                else
+                {
+                    string hashedPassword = DoMD5HashedString(model.Password);
+
+                    Doctor doctor = new()
+                    {
+                        Name = model.Name,
+                        Surname = model.Surname,
+                        Username = model.Username,
+                        Password = hashedPassword,
+                        PoliklinikId = model.PoliklinikId,
+                        CalismaGunu = model.CalismaGunu,
+                        BaslangicSaati = model.BaslangicSaati,
+                        BitisSaati = model.BitisSaati,
+                        Role = "doctor"
+                    };
+
+                    _databaseContext.Doctors.Add(doctor);
+                    int affectedRowCount = _databaseContext.SaveChanges();
+
+                    if (affectedRowCount == 0)
+                    {
+                        ModelState.AddModelError("", "Kullanıcı Eklenemedi.");
+                    }
+                    else
+                    {
+                        return RedirectToAction("DoctorList", "User");
+                    }
+                }
+            }
+            return View(model);
+        }
+        
+        
+        [Authorize(Roles = "admin")]
+        public IActionResult DoctorDuzenle(Guid id)
+        {
+            Doctor doctor = _databaseContext.Doctors.Find(id);
+            DoctorDuzenleViewModel model = _mapper.Map<DoctorDuzenleViewModel>(doctor);
+            
+            return View(model);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public IActionResult DoctorDuzenle(Guid id, DoctorDuzenleViewModel model)
+        {
+            if(ModelState.IsValid) 
+            {
+                Doctor doctor = _databaseContext.Doctors.Find(id);
+
+                _mapper.Map(model, doctor);
+                _databaseContext.SaveChanges();
+
+                return RedirectToAction("DoctorList", "User");
             }
             return View(model);
         }
@@ -227,6 +351,40 @@ namespace hastane_.Controllers
             ProfileInfoLoader();
             return View("Profile");
         }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult Delete(Guid id)
+        {
+            User user = _databaseContext.Users.Find(id);
+
+            _databaseContext.Users.Remove(user);
+            _databaseContext.SaveChanges();
+
+            return RedirectToAction("Index", "User");
+        }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult DeleteDoctor(Guid id)
+        {
+            Doctor doctor = _databaseContext.Doctors.Find(id);
+
+            _databaseContext.Doctors.Remove(doctor);
+            _databaseContext.SaveChanges();
+
+            return RedirectToAction("DoctorList", "User");
+        }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult DeleteAdmin(Guid id)
+        {
+            Admin admin = _databaseContext.Adminler.Find(id);
+
+            _databaseContext.Adminler.Remove(admin);
+            _databaseContext.SaveChanges();
+
+            return RedirectToAction("AdminList", "User");
+        }
+       
         [HttpPost]
         public IActionResult ProfileChangePassword([Required][MinLength(6)][MaxLength(16)] string password)
         {

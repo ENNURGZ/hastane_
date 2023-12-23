@@ -1,0 +1,45 @@
+﻿@model List<AdminListViewModel>
+@{
+    ViewData["Title"] = "Adminler";
+}
+
+<div class="row mb-3">
+    <div class="col">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <a asp-controller="Account" asp-action="AdminKaydi" class="btn btn-primary btn-sm"><i class="fa fa-plus me-2"></i>Admin Ekle</a>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col">
+        <table class="table table-hover table-sm">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Username</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (AdminListViewModel admin in Model)
+                {
+                    <tr>
+                        <td>@admin.Name</td>
+                        <td>@admin.Surname</td>
+                        <td>@admin.Username</td>
+                        <td class="text-end">
+                            <a asp-action="DeleteAdmin" asp-controller="Account" asp-route-id="@admin.AdminId"
+                               onclick="return confirm('Bu Admini Silmek İstediğinize Emin Misiniz : @admin.Username ?')"
+                               class="btn btn-danger btn-sm"><i class="fa fa-trash me-2"></i>Sil</a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
