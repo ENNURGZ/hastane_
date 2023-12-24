@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace hastane_.Controllers
 {
@@ -364,8 +365,7 @@ namespace hastane_.Controllers
 
             return RedirectToAction("AdminList", "User");
         }
-
-        [Authorize(Roles = "admin,doctor")]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteRandevu(Guid id)
         {
             Randevu randevu = _databaseContext.Randevular.Find(id);
@@ -399,7 +399,73 @@ namespace hastane_.Controllers
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction(nameof(Login));
         }
+
+        // AccountController.cs
+        // ...
+
+
+        // ...
+        [AllowAnonymous]
+        public IActionResult RandevuAl()
+        {
+            ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
+            //ViewBag.UserList = new SelectList(_databaseContext.Users, "Id", "Username");
+            return View();
+        }
+
+
+        [AllowAnonymous]
+        [HttpPost]
+            public IActionResult RandevuAl(RandevuAlViewModel model)
+            {
+                if (ModelState.IsValid)
+                {
+                    // Kullanıcının daha önce aynı tarih ve saatte randevu alıp almadığını kontrol et
+                    if (IsAppointmentTimeTaken(model.DoctorId, model.RandevuGunu, model.RandevuSaati))
+                    {
+                        ModelState.AddModelError("", "Seçtiğiniz tarih ve saatte başka bir randevu bulunmaktadır. Lütfen başka bir tarih veya saat seçin.");
+                    ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
+                    //ViewBag.UserList = new SelectList(_databaseContext.Users, "Id", "Username");
+                    return View(model);
+                    }
+                Guid userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                model.UserId = userId;
+
+                // Randevu alma işlemleri...
+                var randevu = new Randevu
+                    {
+                        RandevuId = Guid.NewGuid(),
+                        Id = model.UserId,
+                        DoctorId = model.DoctorId,
+                        RandevuGunu = model.RandevuGunu,
+                        RandevuSaati = model.RandevuSaati
+                    };
+
+                    _databaseContext.Randevular.Add(randevu);
+                    _databaseContext.SaveChanges();
+               
+                return RedirectToAction("RandevuListesi", "User");
+                       
+                }
+            ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
+           // ViewBag.UserList = new SelectList(_databaseContext.Users, "Id", "Username");
+            return View(model);
+            }
+
+            // ...
+
+            private bool IsAppointmentTimeTaken(Guid doctorId, DateTime randevuGunu, TimeSpan randevuSaati)
+            {
+                // Seçilen tarih ve saatte başka bir randevu var mı kontrol et
+                return _databaseContext.Randevular.Any(r =>
+                    r.DoctorId == doctorId &&
+                    r.RandevuGunu == randevuGunu.Date && // Tarih kıyaslaması sadece gün, ay, yıl olarak yapılır
+                    r.RandevuSaati == randevuSaati);
+            }
+
+
     }
 
 
+   
 }
