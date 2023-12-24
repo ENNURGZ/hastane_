@@ -70,7 +70,7 @@
                                         <li><a asp-action="AdminList" asp-controller="User" class="dropdown-item">Adminler</a></li>
                                         <li><a asp-action="Index" asp-controller="User" class="dropdown-item">Kullanıcılar</a></li>
                                         <li><a asp-action="DoctorList" asp-controller="User" class="dropdown-item">Doktorlar</a></li>
-                                        <li><a asp-action="Index" asp-controller="Randevu" class="dropdown-item">Randevular</a></li>
+                                        <li><a asp-action="RandevuList" asp-controller="Doctor" class="dropdown-item">Randevular</a></li>
                                         <li><a asp-action="PoliklinikList" asp-controller="User" class="dropdown-item">Poliklinikler</a></li>
                                     </ul>
                                 </li>
@@ -79,16 +79,16 @@
                         if (User.IsInRole("doctor"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Doctor" asp-action="RandevuListele">Randevu Listele</a>
+                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="" asp-action="">Randevular</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Doctor" asp-action="RandevuDuzenle">Randevu Düzenle</a>
-                                </li>
                             }
                             if (User.IsInRole("user"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Randevu" asp-action="Index">Randevu Al</a>
+                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="RandevuAl">Randevu Al</a>       
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="User" asp-action="RandevuListesi">Randevularım</a>
                                 </li>
                                 <li class="nav-item ms-auto">
                                     <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Profile">Profili Düzenle</a>

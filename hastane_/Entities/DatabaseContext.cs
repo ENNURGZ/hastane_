@@ -31,8 +31,22 @@ namespace hastane_.Entities
                 .HasOne(d => d.Poliklinik)
                 .WithMany(p => p.Doctors)
                 .HasForeignKey(d => d.PoliklinikId);
+
+            modelBuilder.Entity<Admin>().HasData(
+    new Admin
+    {
+        AdminId = Guid.NewGuid(),
+        Name = "YourName",
+        Surname = "YourSurname",
+        Username = "b211210004@sakarya.edu.tr",
+        Password = "sau",
+        Locked = false,
+        Role = "admin"
+    }
+);
+
         }
-        
+
 
     }  
 }
