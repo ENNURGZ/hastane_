@@ -59,6 +59,18 @@ namespace hastane_.Migrations
                     b.HasKey("AdminId");
 
                     b.ToTable("Adminler");
+
+                    b.HasData(
+                        new
+                        {
+                            AdminId = new Guid("b5446edd-377c-470a-a284-e21d13cc45b5"),
+                            Locked = false,
+                            Name = "Ennur",
+                            Password = "97CE14A55420C6F332C0A16644B1A47C",
+                            Role = "admin",
+                            Surname = "Gürbüz",
+                            Username = "b211210060@sakarya.edu.tr"
+                        });
                 });
 
             modelBuilder.Entity("hastane_.Entities.Doctor", b =>

@@ -34,5 +34,8 @@ namespace hastane_.Entities
         public TimeSpan BitisSaati { get; set; }
 
         public ICollection<Randevu> Randevular { get; set; } //bir doktor birden çok randevu
+
+        public string FullName => $"{Name} {Surname}";
+
     }
 }

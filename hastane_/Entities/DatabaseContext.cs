@@ -36,10 +36,10 @@ namespace hastane_.Entities
     new Admin
     {
         AdminId = Guid.NewGuid(),
-        Name = "YourName",
-        Surname = "YourSurname",
-        Username = "b211210004@sakarya.edu.tr",
-        Password = "sau",
+        Name = "Ennur",
+        Surname = "Gürbüz",
+        Username = "b211210060@sakarya.edu.tr",
+        Password = "97CE14A55420C6F332C0A16644B1A47C",
         Locked = false,
         Role = "admin"
     }

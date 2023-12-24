@@ -408,7 +408,8 @@ namespace hastane_.Controllers
         [AllowAnonymous]
         public IActionResult RandevuAl()
         {
-            ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
+            // ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
+            ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "FullName");
             //ViewBag.UserList = new SelectList(_databaseContext.Users, "Id", "Username");
             return View();
         }
@@ -424,7 +425,8 @@ namespace hastane_.Controllers
                     if (IsAppointmentTimeTaken(model.DoctorId, model.RandevuGunu, model.RandevuSaati))
                     {
                         ModelState.AddModelError("", "Seçtiğiniz tarih ve saatte başka bir randevu bulunmaktadır. Lütfen başka bir tarih veya saat seçin.");
-                    ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
+                  //  ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
+                    ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "FullName");
                     //ViewBag.UserList = new SelectList(_databaseContext.Users, "Id", "Username");
                     return View(model);
                     }
@@ -447,8 +449,9 @@ namespace hastane_.Controllers
                 return RedirectToAction("RandevuListesi", "User");
                        
                 }
-            ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
-           // ViewBag.UserList = new SelectList(_databaseContext.Users, "Id", "Username");
+            //ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
+            ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "FullName");
+            // ViewBag.UserList = new SelectList(_databaseContext.Users, "Id", "Username");
             return View(model);
             }
 

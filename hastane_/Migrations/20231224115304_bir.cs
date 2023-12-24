@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace hastane_.Migrations
 {
-    public partial class initialmigrations : Migration
+    public partial class bir : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -109,6 +109,11 @@ namespace hastane_.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Adminler",
+                columns: new[] { "AdminId", "Locked", "Name", "Password", "Role", "Surname", "Username" },
+                values: new object[] { new Guid("b5446edd-377c-470a-a284-e21d13cc45b5"), false, "Ennur", "97CE14A55420C6F332C0A16644B1A47C", "admin", "Gürbüz", "b211210060@sakarya.edu.tr" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_PoliklinikId",
