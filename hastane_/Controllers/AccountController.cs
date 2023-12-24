@@ -47,7 +47,7 @@ namespace hastane_.Controllers
                 Doctor doctor = _databaseContext.Doctors.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower()
                 && x.Password == hashedPassword);
 
-                if (user != null && admin==null)
+                if (user != null && admin == null)
                 {
                     if (user.Locked)
                     {
@@ -179,13 +179,13 @@ namespace hastane_.Controllers
             }
             return View(model);
         }
-        
+
         [Authorize(Roles = "admin")]
         public IActionResult AdminKaydi()
         {
             return View();
         }
-        
+
         [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AdminKaydi(AdminListViewModel model)
@@ -274,14 +274,14 @@ namespace hastane_.Controllers
             }
             return View(model);
         }
-        
-        
+
+
         [Authorize(Roles = "admin")]
         public IActionResult DoctorDuzenle(Guid id)
         {
             Doctor doctor = _databaseContext.Doctors.Find(id);
             DoctorDuzenleViewModel model = _mapper.Map<DoctorDuzenleViewModel>(doctor);
-            
+
             return View(model);
         }
 
@@ -289,7 +289,7 @@ namespace hastane_.Controllers
         [HttpPost]
         public IActionResult DoctorDuzenle(Guid id, DoctorDuzenleViewModel model)
         {
-            if(ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 Doctor doctor = _databaseContext.Doctors.Find(id);
 
@@ -470,5 +470,5 @@ namespace hastane_.Controllers
     }
 
 
-
+   
 }

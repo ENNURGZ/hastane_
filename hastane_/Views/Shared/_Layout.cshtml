@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/lib/toastrjs/toastr.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/hastane_.styles.css" asp-append-version="true" />   
-    
+    <link rel="stylesheet" href="~/hastane_.styles.css" asp-append-version="true" />
+
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Freelancer - Start Bootstrap Theme</title>
@@ -28,44 +28,45 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
             <div class="container">
-                 @if (User.Identity.IsAuthenticated)
-                      {
-                        if (User.IsInRole("admin"))
-                        {
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("admin"))
+                    {
                         <a class="navbar-brand" asp-controller="Admin" asp-action="Index">ASEN HOSPITAL</a>
                     }
-                   else
+                    else
 
                     {
-                       <a class="navbar-brand" asp-controller="Home" asp-action="Index">ASEN HOSPITAL</a>
+                        <a class="navbar-brand" asp-controller="Home" asp-action="Index">ASEN HOSPITAL</a>
 
                     }
 
                 }
                 else
                 {
-                       <a class="navbar-brand" asp-controller="Home" asp-action="Index">ASEN HOSPITAL</a>
+                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">ASEN HOSPITAL</a>
 
                 }
                 <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded"
-                type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
 
- 
 
-                    @if (User.Identity.IsAuthenticated)
+
+                        @if (User.Identity.IsAuthenticated)
                         {
                             if (User.IsInRole("admin"))
                             {
-                               
+
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded " asp-action="Index" asp-controller="Admin" role="button" 
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                        İşlemler</a>
+                                    <a class="nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded " asp-action="Index" asp-controller="Admin" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        İşlemler
+                                    </a>
                                     <ul class="dropdown-menu">
                                         <li><a asp-action="AdminList" asp-controller="User" class="dropdown-item">Adminler</a></li>
                                         <li><a asp-action="Index" asp-controller="User" class="dropdown-item">Kullanıcılar</a></li>
@@ -92,39 +93,39 @@
                                 </li>
                                 <li class="nav-item ms-auto">
                                     <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Profile">Profili Düzenle</a>
-                               </li>
+                                </li>
                             }
-                        <li class="nav-item">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Logout">Çıkış Yap</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Logout">Çıkış Yap</a>
+                            </li>
 
-                    }
-                    else
-                    {
-                       
-                         <li class="nav-item ms-auto">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#portfolio">Portfolio</a>
+                        }
+                        else
+                        {
+
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#portfolio">Portfolio</a>
                             </li>
-                        <li class="nav-item ms-auto">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#about" >About</a>
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#about">About</a>
                             </li>
-                        <li class="nav-item ms-auto">
+                            <li class="nav-item ms-auto">
                                 <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Login">Giriş Yap</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Register">Kayıt Ol</a>
-                        </li>
-                    }
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Register">Kayıt Ol</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
 
-                   
+
     </header>
-  
-    
-    
+
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
