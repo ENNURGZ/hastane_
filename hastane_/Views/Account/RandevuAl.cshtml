@@ -1,4 +1,5 @@
-﻿@model hastane_.Models.RandevuAlViewModel
+﻿@inject LanguageService language
+@model hastane_.Models.RandevuAlViewModel
 <script>
     $(document).ready(function () {
         $("#PoliklinikId").change(function () {
@@ -9,7 +10,7 @@
                 url: "/Account/GetDoctorsByPoliklinik",
                 data: { poliklinikId: poliklinikId },
                 success: function (data) {
-                    var options = '<option value="">Doktor Seçiniz</option>';
+                    var options = '<option value="">@language.GetKey("Doktor Seçiniz")</option>';
                     for (var i = 0; i < data.length; i++) {
                         options += '<option value="' + data[i].doctorId + '">' + data[i].fullName +
                             '</option>';

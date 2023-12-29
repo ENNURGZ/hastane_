@@ -189,6 +189,9 @@
   <data name="Doktor Sayfası" xml:space="preserve">
     <value>Doktor Sayfası</value>
   </data>
+  <data name="Doktor Seçiniz" xml:space="preserve">
+    <value>Doktor Seçiniz</value>
+  </data>
   <data name="Doktorlar" xml:space="preserve">
     <value>Doktorlar</value>
   </data>
@@ -275,6 +278,9 @@
   </data>
   <data name="Poliklinik Id" xml:space="preserve">
     <value>Poliklinik Id</value>
+  </data>
+  <data name="Poliklinik Seçin" xml:space="preserve">
+    <value>Poliklinik Seçin</value>
   </data>
   <data name="Profil" xml:space="preserve">
     <value>Profil</value>
