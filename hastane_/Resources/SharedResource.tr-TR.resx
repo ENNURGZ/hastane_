@@ -132,8 +132,17 @@
   <data name="Adminler" xml:space="preserve">
     <value>Adminler</value>
   </data>
+  <data name="ADMİN" xml:space="preserve">
+    <value>ADMİN</value>
+  </data>
   <data name="Anasayfaya Gidiniz." xml:space="preserve">
     <value>Anasayfaya Gidiniz.</value>
+  </data>
+  <data name="Asen Hastanesi uzman ve güçlü sağlık personeliyle çalışmaktadır. Hizmet mükemmelliği sağlayarak, hasta ve hasta yakını memnuniyetini en yüksek seviyede tutmaktadır. Tüm hastalarını  bir bütün olarak ele alan, zihinsel ve fiziksel iyi olma halini gözeten, kişiselleştirilmiş, koruyucu, geleceği öngören ve tedavi edici yaklaşımlarıyla hastalarının ihtiyaçlarına yanıt vermektedir." xml:space="preserve">
+    <value>Asen Hastanesi uzman ve güçlü sağlık personeliyle çalışmaktadır. Hizmet mükemmelliği sağlayarak, hasta ve hasta yakını memnuniyetini en yüksek seviyede tutmaktadır. Tüm hastalarını  bir bütün olarak ele alan, zihinsel ve fiziksel iyi olma halini gözeten, kişiselleştirilmiş, koruyucu, geleceği öngören ve tedavi edici yaklaşımlarıyla hastalarının ihtiyaçlarına yanıt vermektedir.</value>
+  </data>
+  <data name="Asen Hastanesi'nin vizyonu; günümüz teknolojik imkanlarının tümünden faydalanıldığı, çağdaş bir altyapı ile kurumsal gelişimini sürdürebilen, personel dokusunun tam anlamıyla iyileştirildiği daha geniş kitlelere ulaşan, yeni projeler üreten, huzurlu, konforlu bir ortamda, sektöründe öncü uygulamalara imza atan bölgemizde lider bir sağlık kuruluşu hedefini yaşatmaktadır." xml:space="preserve">
+    <value>Asen Hastanesi'nin vizyonu; günümüz teknolojik imkanlarının tümünden faydalanıldığı, çağdaş bir altyapı ile kurumsal gelişimini sürdürebilen, personel dokusunun tam anlamıyla iyileştirildiği daha geniş kitlelere ulaşan, yeni projeler üreten, huzurlu, konforlu bir ortamda, sektöründe öncü uygulamalara imza atan bölgemizde lider bir sağlık kuruluşu hedefini yaşatmaktadır.</value>
   </data>
   <data name="ASEN HASTANESİ" xml:space="preserve">
     <value>ASEN HASTANESİ</value>
@@ -158,6 +167,9 @@
   </data>
   <data name="Dahiliye" xml:space="preserve">
     <value>Dahiliye</value>
+  </data>
+  <data name="DAHİLİYE" xml:space="preserve">
+    <value>DAHİLİYE</value>
   </data>
   <data name="Deneme" xml:space="preserve">
     <value>Deneme</value>
@@ -192,6 +204,9 @@
   <data name="Giriş Yap" xml:space="preserve">
     <value>Giriş Yap</value>
   </data>
+  <data name="GÖZ HASTALIKLARI" xml:space="preserve">
+    <value>GÖZ HASTALIKLARI</value>
+  </data>
   <data name="Göz-hastalıkları" xml:space="preserve">
     <value>Göz-hastalıkları</value>
   </data>
@@ -201,17 +216,26 @@
   <data name="Hasta" xml:space="preserve">
     <value>Hasta</value>
   </data>
-  <data name="Hoşgeldiniz" xml:space="preserve">
-    <value>Hoşgeldiniz</value>
+  <data name="HOŞGELDİNİZ" xml:space="preserve">
+    <value>HOŞGELDİNİZ</value>
   </data>
   <data name="Kadın-Doğum" xml:space="preserve">
     <value>Kadın-Doğum</value>
+  </data>
+  <data name="Kapat" xml:space="preserve">
+    <value>Kapat</value>
   </data>
   <data name="Kaydet" xml:space="preserve">
     <value>Kaydet</value>
   </data>
   <data name="Kayıt Ol" xml:space="preserve">
     <value>Kayıt Ol</value>
+  </data>
+  <data name="Konum" xml:space="preserve">
+    <value>Konum</value>
+  </data>
+  <data name="Kulak Burun Boğaz" xml:space="preserve">
+    <value>Kulak Burun Boğaz</value>
   </data>
   <data name="Kulak-burun-boğaz" xml:space="preserve">
     <value>Kulak-burun-boğaz</value>
@@ -237,6 +261,9 @@
   <data name="Nöroloji" xml:space="preserve">
     <value>Nöroloji</value>
   </data>
+  <data name="NÖROLOJİ" xml:space="preserve">
+    <value>NÖROLOJİ</value>
+  </data>
   <data name="Pediatri" xml:space="preserve">
     <value>Pediatri</value>
   </data>
@@ -257,6 +284,9 @@
   </data>
   <data name="Psikiatri" xml:space="preserve">
     <value>Psikiatri</value>
+  </data>
+  <data name="PSİKİATRİ" xml:space="preserve">
+    <value>PSİKİATRİ</value>
   </data>
   <data name="Randevu Al" xml:space="preserve">
     <value>Randevu Al</value>
@@ -300,8 +330,14 @@
   <data name="Çıkış Yap" xml:space="preserve">
     <value>Çıkış Yap</value>
   </data>
+  <data name="İletişim" xml:space="preserve">
+    <value>İletişim</value>
+  </data>
   <data name="İlgili Sayfaya Erişiminiz Yoktur." xml:space="preserve">
     <value>İlgili Sayfaya Erişiminiz Yoktur.</value>
+  </data>
+  <data name="İnternet Sayfalarımız" xml:space="preserve">
+    <value>İnternet Sayfalarımız</value>
   </data>
   <data name="İsim" xml:space="preserve">
     <value>İsim</value>

@@ -20,20 +20,26 @@
 </head>
 <body id="page-top">
     <!-- Masthead-->
-    <header class="masthead bg-primary text-white text-center">
-        <div class="container d-flex align-items-center flex-column">
-            <!-- Masthead Avatar Image-->
-            <img class="masthead-avatar mb-5" src="~/assest/img/avataaars.svg" alt="..." />
-            <!-- Masthead Heading-->
-            <h1 class="masthead-heading text-uppercase mb-0">@language.GetKey("Doktor Sayfası")</h1>
-            <!-- Icon Divider-->
-            <div class="divider-custom divider-light">
-                <div class="divider-custom-line"></div>
-                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                <div class="divider-custom-line"></div>
+    <br />
+        <br />
+        <br />
+
+    <header class="">
+        <div id="imageSlider" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="carousel-caption d-none d-md-block text-center text-uppercase text-secondary mb-3">
+
+                        <h1>@language.GetKey("Doktor") @User.Identity.Name</h1>
+
+
+                    </div>
+
+                    <img class="d-block w-100" src="~/assest/img/webfoto/ede9d1d2dg9kpfwxsaiictm.jpg" alt="Slide 1">
+                </div>
             </div>
-            <!-- Masthead Subheading-->
-            <p class="masthead-subheading font-weight-light mb-0">Graphic Artist - Web Designer - Illustrator</p>
+
         </div>
     </header>
 
