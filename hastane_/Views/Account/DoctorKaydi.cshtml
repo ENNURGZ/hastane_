@@ -49,25 +49,53 @@
                 <span asp-validation-for="RePassword" class="text-danger small"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="PoliklinikId" class="form-label">Poliklinik Id</label>
-                <input asp-for="PoliklinikId" type="int" class="form-control" />
+                <label asp-for="PoliklinikId" class="form-label">Poliklinik</label>
+                <select asp-for="PoliklinikId" class="form-control">
+                    <option value="">Seçiniz</option>
+                    <option value="1">Kadın-Doğum</option>
+                    <option value="2">Dahiliye</option>
+                    <option value="3">Cildiye</option>
+                    <option value="4">Nöroloji</option>
+                    <option value="5">Pediatri</option>
+                    <option value="6">Kulak-burun-boğaz</option>
+                    <option value="7">Göz-hastalıkları</option>
+                    <option value="8">Psikiatri</option>
+                </select>
                 <span asp-validation-for="PoliklinikId" class="text-danger small"></span>
             </div>
-            <div class="form-group mb-3">
-                <label asp-for="CalismaGunu" class="form-label">Çalışma Günü</label>
-                <input asp-for="CalismaGunu" type="DayOfWeek" class="form-control" />
-                <span asp-validation-for="CalismaGunu" class="text-danger small"></span>
-            </div>
+
             <div class="form-group mb-3">
                 <label asp-for="BaslangicSaati" class="form-label">Başlangıç Saati</label>
-                <input asp-for="BaslangicSaati" type="TimeSpan" class="form-control" />
+                <select asp-for="BaslangicSaati" class="form-control">
+                    <option value="">Seçiniz</option>
+                    @for (int i = 9; i <= 17; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            var time = $"{i:D2}:{j * 30:D2}:00";
+                            <option value="@time">@time</option>
+                        }
+                    }
+                </select>
                 <span asp-validation-for="BaslangicSaati" class="text-danger small"></span>
+            </div>
+
             <div class="form-group mb-3">
-                    <label asp-for="BitisSaati" class="form-label">Bitiş Saati</label>
-                <input asp-for="BitisSaati" type="TimeSpan" class="form-control" />
+                <label asp-for="BitisSaati" class="form-label">Bitiş Saati</label>
+                <select asp-for="BitisSaati" class="form-control">
+                    <option value="">Seçiniz</option>
+                    @for (int i = 9; i <= 17; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            var time = $"{i:D2}:{j * 30:D2}:00";
+                            <option value="@time">@time</option>
+                        }
+                    }
+                </select>
                 <span asp-validation-for="BitisSaati" class="text-danger small"></span>
             </div>
-            </div>
+
 
             <div class="form-group d-grid mb-3">
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket me-2"></i> Kaydet</button>

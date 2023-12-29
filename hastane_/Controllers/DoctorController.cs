@@ -21,13 +21,6 @@ namespace hastane_.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "admin")]
-        public IActionResult RandevuList()
-        {
-            List<RandevuListViewModel> randevular =
-                _databaseContext.Randevular.ToList()
-                .Select(x => _mapper.Map<RandevuListViewModel>(x)).ToList();
-            return View(randevular);
-        }
+
     }
 }

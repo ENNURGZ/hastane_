@@ -68,7 +68,6 @@ namespace hastane_.Migrations
                     Locked = table.Column<bool>(type: "bit", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PoliklinikId = table.Column<int>(type: "int", nullable: false),
-                    CalismaGunu = table.Column<int>(type: "int", nullable: false),
                     BaslangicSaati = table.Column<TimeSpan>(type: "time", nullable: false),
                     BitisSaati = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
@@ -113,7 +112,7 @@ namespace hastane_.Migrations
             migrationBuilder.InsertData(
                 table: "Adminler",
                 columns: new[] { "AdminId", "Locked", "Name", "Password", "Role", "Surname", "Username" },
-                values: new object[] { new Guid("b5446edd-377c-470a-a284-e21d13cc45b5"), false, "Ennur", "97CE14A55420C6F332C0A16644B1A47C", "admin", "Gürbüz", "b211210060@sakarya.edu.tr" });
+                values: new object[] { new Guid("60e85702-c987-482c-9aa5-fb40b2b0a312"), false, "Ennur", "97CE14A55420C6F332C0A16644B1A47C", "admin", "Gürbüz", "b211210060@sakarya.edu.tr" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_PoliklinikId",
