@@ -19,13 +19,15 @@ namespace hastane_.Controllers
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        public AccountController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
+        private readonly LanguageService _languageService;
+        public AccountController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper, LanguageService languageService)
         {
             _databaseContext = databaseContext;
             _configuration = configuration;
             _mapper = mapper;
+            _languageService = languageService;
         }
-
+       
         [AllowAnonymous]
         public IActionResult Login()
         {
@@ -118,7 +120,7 @@ namespace hastane_.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Username or password is incorrect.");
+                    ModelState.AddModelError("", _languageService.GetKey("Kullanıcı adı veya şifre yanlış."));
                 }
             }
 
@@ -148,7 +150,7 @@ namespace hastane_.Controllers
             {
                 if (_databaseContext.Users.Any(x => x.Username.ToLower() == model.Username.ToLower()))
                 {
-                    ModelState.AddModelError(nameof(model.Username), "Username is already exists.");
+                    ModelState.AddModelError(nameof(model.Username), _languageService.GetKey("Kullanıcı adı zaten var."));
                     View(model);
                 }
                 else
@@ -169,7 +171,7 @@ namespace hastane_.Controllers
 
                     if (affectedRowCount == 0)
                     {
-                        ModelState.AddModelError("", "Kullanıcı Eklenemedi.");
+                        ModelState.AddModelError("", _languageService.GetKey("Kullanıcı Eklenemedi."));
                     }
                     else
                     {
@@ -194,7 +196,7 @@ namespace hastane_.Controllers
             {
                 if (_databaseContext.Adminler.Any(x => x.Username.ToLower() == model.Username.ToLower()))
                 {
-                    ModelState.AddModelError(nameof(model.Username), "Username is already exists.");
+                    ModelState.AddModelError(nameof(model.Username), _languageService.GetKey("Kullanıcı adı zaten var."));
                     View(model);
                 }
                 else
@@ -215,7 +217,7 @@ namespace hastane_.Controllers
 
                     if (affectedRowCount == 0)
                     {
-                        ModelState.AddModelError("", "Kullanıcı Eklenemedi.");
+                        ModelState.AddModelError("", _languageService.GetKey("Kullanıcı Eklenemedi."));
                     }
                     else
                     {
@@ -239,7 +241,7 @@ namespace hastane_.Controllers
             {
                 if (_databaseContext.Doctors.Any(x => x.Username.ToLower() == model.Username.ToLower()))
                 {
-                    ModelState.AddModelError(nameof(model.Username), "Username is already exists.");
+                    ModelState.AddModelError(nameof(model.Username), _languageService.GetKey("Kullanıcı adı zaten var."));
                     View(model);
                 }
                 else
@@ -253,7 +255,6 @@ namespace hastane_.Controllers
                         Username = model.Username,
                         Password = hashedPassword,
                         PoliklinikId = model.PoliklinikId,
-                        CalismaGunu = model.CalismaGunu,
                         BaslangicSaati = model.BaslangicSaati,
                         BitisSaati = model.BitisSaati,
                         Role = "doctor"
@@ -264,7 +265,7 @@ namespace hastane_.Controllers
 
                     if (affectedRowCount == 0)
                     {
-                        ModelState.AddModelError("", "Kullanıcı Eklenemedi.");
+                        ModelState.AddModelError("", _languageService.GetKey("Kullanıcı Eklenemedi."));
                     }
                     else
                     {
@@ -366,6 +367,16 @@ namespace hastane_.Controllers
             return RedirectToAction("AdminList", "User");
         }
         [Authorize(Roles = "admin")]
+        public IActionResult AdminDeleteRandevu(Guid id)
+        {
+            Randevu randevu = _databaseContext.Randevular.Find(id);
+
+            _databaseContext.Randevular.Remove(randevu);
+            _databaseContext.SaveChanges();
+
+            return RedirectToAction("AdminRandevuListesi", "Admin");
+        }
+        [Authorize(Roles = "user")]
         public IActionResult DeleteRandevu(Guid id)
         {
             Randevu randevu = _databaseContext.Randevular.Find(id);
@@ -373,8 +384,19 @@ namespace hastane_.Controllers
             _databaseContext.Randevular.Remove(randevu);
             _databaseContext.SaveChanges();
 
-            return RedirectToAction("RandevuList", "Doctor");
+            return RedirectToAction("RandevuListesi", "User");
         }
+        [Authorize(Roles = "doctor")]
+        public IActionResult DoctorDeleteRandevu(Guid id)
+        {
+            Randevu randevu = _databaseContext.Randevular.Find(id);
+
+            _databaseContext.Randevular.Remove(randevu);
+            _databaseContext.SaveChanges();
+
+            return RedirectToAction("DoctorRandevuListesi", "Doctor");
+        }
+
 
         [HttpPost]
         public IActionResult ProfileChangePassword([Required][MinLength(6)][MaxLength(16)] string password)
@@ -400,75 +422,127 @@ namespace hastane_.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        // AccountController.cs
-        // ...
 
-
-        // ...
         [AllowAnonymous]
         public IActionResult RandevuAl()
         {
-            // ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
             ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "FullName");
-            //ViewBag.UserList = new SelectList(_databaseContext.Users, "Id", "Username");
+            ViewBag.PoliklinikList = new SelectList(_databaseContext.Poliklinikler, "PoliklinikId", "PoliklinikAdi");
+            ViewBag.AvailableAppointmentTimes = GetAvailableAppointmentTimes();
             return View();
         }
 
 
         [AllowAnonymous]
-        [HttpPost]
-            public IActionResult RandevuAl(RandevuAlViewModel model)
-            {
-                if (ModelState.IsValid)
+        [HttpGet]
+        public IActionResult GetDoctorsByPoliklinik(int poliklinikId)
+        {
+            var doctors = _databaseContext.Doctors
+                .Where(d => d.PoliklinikId == poliklinikId)
+                .Select(d => new
                 {
-                    // Kullanıcının daha önce aynı tarih ve saatte randevu alıp almadığını kontrol et
-                    if (IsAppointmentTimeTaken(model.DoctorId, model.RandevuGunu, model.RandevuSaati))
-                    {
-                        ModelState.AddModelError("", "Seçtiğiniz tarih ve saatte başka bir randevu bulunmaktadır. Lütfen başka bir tarih veya saat seçin.");
-                  //  ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
+                    DoctorId = d.DoctorId,
+                    FullName = d.FullName,
+
+
+                })
+                .ToList();
+
+            return Json(doctors);
+        }
+
+
+
+
+
+        private bool IsAppointmentTimeTaken(Guid doctorId, DateTime randevuGunu, TimeSpan randevuSaati)
+        {
+            // Seçilen tarih ve saatte ve poliklinikte başka bir randevu var mı kontrol et
+            return _databaseContext.Randevular.Any(r =>
+                r.DoctorId == doctorId &&
+                r.RandevuGunu == randevuGunu.Date && // Tarih kıyaslaması sadece gün, ay, yıl olarak yapılır
+                r.RandevuSaati == randevuSaati);
+        }
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult RandevuAl(RandevuAlViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (model.RandevuGunu.Date < DateTime.Today)
+                {
+                    ModelState.AddModelError(nameof(model.RandevuGunu), "Geçmiş bir tarih seçemezsiniz.");
                     ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "FullName");
-                    //ViewBag.UserList = new SelectList(_databaseContext.Users, "Id", "Username");
+                    ViewBag.PoliklinikList = new SelectList(_databaseContext.Poliklinikler, "PoliklinikId", "PoliklinikAdi");
+                    ViewBag.AvailableAppointmentTimes = GetAvailableAppointmentTimes();
                     return View(model);
-                    }
+                }
+
+                // Kullanıcının daha önce aynı tarih ve saatte randevu aldığını kontrol et
+                if (IsAppointmentTimeTaken(model.DoctorId, model.RandevuGunu, model.RandevuSaati))
+                {
+                    ModelState.AddModelError("", _languageService.GetKey("Seçtiğiniz tarih ve saatte başka bir randevu bulunmaktadır. Lütfen başka bir tarih veya saat seçin."));
+                    ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "FullName");
+                    ViewBag.PoliklinikList = new SelectList(_databaseContext.Poliklinikler, "PoliklinikId", "PoliklinikAdi");
+                    ViewBag.AvailableAppointmentTimes = GetAvailableAppointmentTimes();
+                    return View(model);
+                }
+
+
                 Guid userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 model.UserId = userId;
 
                 // Randevu alma işlemleri...
                 var randevu = new Randevu
-                    {
-                        RandevuId = Guid.NewGuid(),
-                        Id = model.UserId,
-                        DoctorId = model.DoctorId,
-                        RandevuGunu = model.RandevuGunu,
-                        RandevuSaati = model.RandevuSaati
-                    };
+                {
+                    RandevuId = Guid.NewGuid(),
+                    Id = model.UserId,
+                    DoctorId = model.DoctorId,
+                    RandevuGunu = model.RandevuGunu,
+                    RandevuSaati = model.RandevuSaati,
 
-                    _databaseContext.Randevular.Add(randevu);
-                    _databaseContext.SaveChanges();
-               
+
+                };
+
+                _databaseContext.Randevular.Add(randevu);
+                _databaseContext.SaveChanges();
+
+
                 return RedirectToAction("RandevuListesi", "User");
-                       
-                }
-            //ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "Name");
+            }
+
             ViewBag.DoctorList = new SelectList(_databaseContext.Doctors, "DoctorId", "FullName");
-            // ViewBag.UserList = new SelectList(_databaseContext.Users, "Id", "Username");
+            ViewBag.PoliklinikList = new SelectList(_databaseContext.Poliklinikler, "PoliklinikId", "PoliklinikAdi");
+            ViewBag.AvailableAppointmentTimes = GetAvailableAppointmentTimes();
+
+
             return View(model);
-            }
+        }
 
-            // ...
 
-            private bool IsAppointmentTimeTaken(Guid doctorId, DateTime randevuGunu, TimeSpan randevuSaati)
+
+        private List<TimeSpan> GetAvailableAppointmentTimes()
+        {
+            int intervalInMinutes = 30;
+            DateTime baseTime = DateTime.Today.AddHours(9); // Başlangıç saati, örneğin 09:00
+
+            List<TimeSpan> availableTimes = new List<TimeSpan>();
+
+            while (baseTime.Hour < 17) // Randevu alınabilecek son saat, örneğin 17:00
             {
-                // Seçilen tarih ve saatte başka bir randevu var mı kontrol et
-                return _databaseContext.Randevular.Any(r =>
-                    r.DoctorId == doctorId &&
-                    r.RandevuGunu == randevuGunu.Date && // Tarih kıyaslaması sadece gün, ay, yıl olarak yapılır
-                    r.RandevuSaati == randevuSaati);
+                availableTimes.Add(baseTime.TimeOfDay);
+                baseTime = baseTime.AddMinutes(intervalInMinutes);
             }
+
+            return availableTimes;
+
+
+        }
+
 
 
     }
-
-
-   
 }

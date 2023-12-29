@@ -63,7 +63,7 @@ namespace hastane_.Migrations
                     b.HasData(
                         new
                         {
-                            AdminId = new Guid("b5446edd-377c-470a-a284-e21d13cc45b5"),
+                            AdminId = new Guid("c21aa9c4-c56b-407d-bdda-3e9a2d6aae7b"),
                             Locked = false,
                             Name = "Ennur",
                             Password = "97CE14A55420C6F332C0A16644B1A47C",

@@ -18,9 +18,10 @@ namespace hastane_.Models
         [Display(Name = "Doktor")]
         public Guid DoctorId { get; set; }
 
-        /*[Required(ErrorMessage = "Hasta bilgisi zorunludur.")]
-        [Display(Name = "Hasta")]*/
         public Guid UserId { get; set; }
+
+        public int PoliklinikId { get; set; }
+
+
     }
 }
-

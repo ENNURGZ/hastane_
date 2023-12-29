@@ -32,6 +32,8 @@ namespace hastane_.Entities
                 .WithMany(p => p.Doctors)
                 .HasForeignKey(d => d.PoliklinikId);
 
+
+
             modelBuilder.Entity<Admin>().HasData(
     new Admin
     {
@@ -42,11 +44,12 @@ namespace hastane_.Entities
         Password = "97CE14A55420C6F332C0A16644B1A47C",
         Locked = false,
         Role = "admin"
-    }
-);
+    });
+
+
 
         }
 
 
-    }  
+    }
 }

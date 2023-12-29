@@ -3,6 +3,8 @@ using hastane_.Entities;
 using hastane_.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace hastane_.Controllers
 {
@@ -21,12 +23,17 @@ namespace hastane_.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "admin")]
-        public IActionResult RandevuList()
+        [Authorize(Roles = "doctor")]
+        public IActionResult DoctorRandevuListesi()
         {
-            List<RandevuListViewModel> randevular =
-                _databaseContext.Randevular.ToList()
-                .Select(x => _mapper.Map<RandevuListViewModel>(x)).ToList();
+            Guid userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            // Kullanıcının randevularını getir
+            var randevular = _databaseContext.Randevular
+                .Include(r => r.User)
+                .Where(r => r.DoctorId == userId)
+                .ToList();
+
             return View(randevular);
         }
     }

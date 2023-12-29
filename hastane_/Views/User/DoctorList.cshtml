@@ -1,4 +1,5 @@
 ﻿@model List<DoctorListViewModel>
+@inject LanguageService language
 @{
     ViewData["Title"] = "Doktorlar";
 }
@@ -10,7 +11,7 @@
         <br />
         <br />
         <br />
-        <a asp-action="DoctorKaydi" asp-controller="Account" class="btn btn-primary btn-sm"><i class="fa fa-plus me-2"></i>Doktor Ekle</a>
+        <a asp-action="DoctorKaydi" asp-controller="Account" class="btn btn-primary btn-sm"><i class="fa fa-plus me-2"></i>@language.GetKey("Doktor Ekle")</a>
     </div>
 </div>
 <div class="row mb-3">
@@ -18,13 +19,12 @@
         <table class="table table-hover table-sm">
             <thead>
                 <tr>                   
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>Username</th>
-                    <th>Polikinik Id</th>
-                    <th>Çalışma Günü</th>
-                    <th>Başlangıç Saati</th>
-                    <th>Bitiş Saati</th>
+                    <th>@language.GetKey("İsim")</th>
+                    <th>@language.GetKey("Soyisim")</th>
+                    <th>@language.GetKey("Kullanıcı Adı")</th>
+                    <th>@language.GetKey("Polikinik Id")</th>
+                    <th>@language.GetKey("Başlangıç Saati")</th>
+                    <th>@language.GetKey("Bitiş Saati")</th>
                     <th></th>
                 </tr>
             </thead>
@@ -36,14 +36,13 @@
                         <td>@doctor.Surname</td>
                         <td>@doctor.Username</td>
                         <td>@doctor.PoliklinikId</td>
-                        <td>@doctor.CalismaGunu</td>
                         <td>@doctor.BaslangicSaati</td>
                         <td>@doctor.BitisSaati</td>
                         <td class="text-end">
-                            <a asp-action="DoctorDuzenle" asp-controller="Account" asp-route-id="@doctor.DoctorId" class="btn btn-info btn-sm text-white"><i class="fa fa-edit me-2"></i>Düzenle</a>
+                            <a asp-action="DoctorDuzenle" asp-controller="Account" asp-route-id="@doctor.DoctorId" class="btn btn-info btn-sm text-white"><i class="fa fa-edit me-2"></i>@language.GetKey("Düzenle")</a>
                             <a asp-action="DeleteDoctor" asp-controller="Account" asp-route-id="@doctor.DoctorId"
-                               onclick="return confirm('Bu Doktoru Silmek İstediğinize Emin Misiniz : @doctor.Username ?')"
-                               class="btn btn-danger btn-sm"><i class="fa fa-trash me-2"></i>Sil</a>
+                                   onclick="return confirm('@language.GetKey("Bu Doktoru Silmek İstediğinize Emin Misiniz") : @doctor.Username ?')"
+                               class="btn btn-danger btn-sm"><i class="fa fa-trash me-2"></i>@language.GetKey("Sil")</a>
                         </td>
                     </tr>
                 }

@@ -1,6 +1,7 @@
-﻿@model LoginViewModel
+﻿@inject LanguageService language
+@model LoginViewModel
 @{
-    ViewData["Title"] = "Giriş";
+    ViewData["Title"] = @language.GetKey("Giriş");
 }
 
 
@@ -21,18 +22,18 @@
             <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
 
             <div class="form-group mb-3">
-                <label asp-for="Username" class="form-label">Kullanıcı Adı</label>
+                <label asp-for="Username" class="form-label">@language.GetKey("Kullanıcı Adı")</label>
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger small"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Password" class="form-label">Şifre</label>
+                <label asp-for="Password" class="form-label">@language.GetKey("Şifre")</label>
                 <input asp-for="Password" type="password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger small"></span>
             </div>
 
             <div class="form-group d-grid mb-3">
-                <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>Giriş Yap</button>
+                <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>@language.GetKey("Giriş Yap")</button>
             </div>
         </form>
     </div>
