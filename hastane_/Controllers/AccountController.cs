@@ -335,17 +335,6 @@ namespace hastane_.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        public IActionResult Delete(Guid id)
-        {
-            User user = _databaseContext.Users.Find(id);
-
-            _databaseContext.Users.Remove(user);
-            _databaseContext.SaveChanges();
-
-            return RedirectToAction("Index", "User");
-        }
-
-        [Authorize(Roles = "admin")]
         public IActionResult DeleteDoctor(Guid id)
         {
             Doctor doctor = _databaseContext.Doctors.Find(id);

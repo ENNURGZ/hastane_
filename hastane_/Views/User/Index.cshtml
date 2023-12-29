@@ -32,10 +32,10 @@
                         <td>@user.Surname</td>
                         <td>@user.Username</td>
                         <td class="text-end">
-                            <a asp-action="Delete" asp-controller="Account" asp-route-id="@user.Id"
+                            <a asp-action="Delete" asp-controller="Api" asp-route-id="@user.Id"
                                onclick="return confirm('@language.GetKey("Bu Kullanıcıyı Silmek İstediğinize Emin Misiniz") : @user.Username ?')"
-                            class="btn btn-danger btn-sm"><i class="fa fa-trash me-2"></i>@language.GetKey("Sil")</a>
-                            
+                               class="btn btn-danger btn-sm"><i class="fa fa-trash me-2"></i>@language.GetKey("Sil")</a>
+
                         </td>
                     </tr>
                 }

@@ -50,7 +50,7 @@
                 <span asp-validation-for="RePassword" class="text-danger small"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="PoliklinikId" class="form-label">Poliklinik</label>
+                <label asp-for="PoliklinikId" class="form-label">@language.GetKey("Poliklinik")</label>
                 <select asp-for="PoliklinikId" class="form-control">
                     <option value="">@language.GetKey("Seçiniz")</option>
                     <option value="1">@language.GetKey("Kadın-Doğum")</option>
