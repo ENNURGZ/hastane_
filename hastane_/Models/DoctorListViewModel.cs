@@ -11,8 +11,6 @@ namespace hastane_.Models
         public string RePassword { get; set; }
         public int PoliklinikId { get; set; }
         public bool Locked { get; set; } = false;
-
-
         public TimeSpan BaslangicSaati { get; set; }
         public TimeSpan BitisSaati { get; set; }
     }
@@ -23,7 +21,6 @@ namespace hastane_.Models
         public string Username { get; set; }
         public int PoliklinikId { get; set; }
         public bool Locked { get; set; } = false;
-        public DayOfWeek CalismaGunu { get; set; }
         public TimeSpan BaslangicSaati { get; set; }
         public TimeSpan BitisSaati { get; set; }
     }
