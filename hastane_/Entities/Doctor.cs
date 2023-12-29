@@ -29,7 +29,6 @@ namespace hastane_.Entities
         public string Role { get; set; } = "doctor";
         public int PoliklinikId { get; set; }
         public Poliklinik Poliklinik { get; set; }
-        public DayOfWeek CalismaGunu { get; set; }
         public TimeSpan BaslangicSaati { get; set; }
         public TimeSpan BitisSaati { get; set; }
 

@@ -32,7 +32,16 @@ namespace hastane_.Entities
                 .WithMany(p => p.Doctors)
                 .HasForeignKey(d => d.PoliklinikId);
 
-
+            modelBuilder.Entity<Poliklinik>().HasData(
+            new Poliklinik { PoliklinikId = 1, PoliklinikAdi = "Kadın-Doğum" },
+            new Poliklinik { PoliklinikId = 2, PoliklinikAdi = "Dahiliye" },
+            new Poliklinik { PoliklinikId = 3, PoliklinikAdi = "Cildiye" },
+            new Poliklinik { PoliklinikId = 4, PoliklinikAdi = "Nöroloji" },
+            new Poliklinik { PoliklinikId = 5, PoliklinikAdi = "Pediatri" },
+            new Poliklinik { PoliklinikId = 6, PoliklinikAdi = "Kulak-burun-boğaz" },
+            new Poliklinik { PoliklinikId = 7, PoliklinikAdi = "Göz-hastalıkları" },
+            new Poliklinik { PoliklinikId = 8, PoliklinikAdi = "Psikiatri" }
+        );
 
             modelBuilder.Entity<Admin>().HasData(
     new Admin
