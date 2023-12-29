@@ -1,6 +1,7 @@
-﻿@model DoctorDuzenleViewModel
+﻿@inject LanguageService language
+@model DoctorDuzenleViewModel
 @{
-    ViewData["Title"] = "Doktor Düzenle";
+    ViewData["Title"] = @language.GetKey("Doktor Düzenle");
 }
 
 
@@ -21,24 +22,24 @@
             <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
 
             <div class="form-group mb-3">
-                <label asp-for="Name" class="form-label">İsim</label>
+                <label asp-for="Name" class="form-label">@language.GetKey("İsim")</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger small"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="Surname" class="form-label">Soyisim</label>
+                <label asp-for="Surname" class="form-label">@language.GetKey("Soyisim")</label>
                 <input asp-for="Surname" class="form-control" />
                 <span asp-validation-for="Surname" class="text-danger small"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="Username" class="form-label">Kullanıcı Adı</label>
+                <label asp-for="Username" class="form-label">@language.GetKey("Kullanıcı Adı")</label>
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger small"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="PoliklinikId" class="form-label">Poliklinik</label>
+                <label asp-for="PoliklinikId" class="form-label">@language.GetKey("Poliklinik")</label>
                 <select asp-for="PoliklinikId" class="form-control">
                     <option value="">Seçiniz</option>
                     <option value="1">Kadın-Doğum</option>
@@ -53,37 +54,24 @@
                 <span asp-validation-for="PoliklinikId" class="text-danger small"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="BaslangicSaati" class="form-label">Başlangıç Saati</label>
-                <select asp-for="BaslangicSaati" class="form-control">
-                    <option value="">Seçiniz</option>
-                    @for (int i = 9; i <= 17; i++)
-                    {
-                        for (int j = 0; j < 2; j++)
-                        {
-                            var time = $"{i:D2}:{j * 30:D2}:00";
-                            <option value="@time">@time</option>
-                        }
-                    }
-                </select>
-                <span asp-validation-for="BaslangicSaati" class="text-danger small"></span>
+                <label asp-for="CalismaGunu" class="form-label">Çalışma Günü</label>
+                <input asp-for="CalismaGunu" type="DayOfWeek" class="form-control" />
+                <span asp-validation-for="CalismaGunu" class="text-danger small"></span>
             </div>
-
             <div class="form-group mb-3">
-                <label asp-for="BitisSaati" class="form-label">Bitiş Saati</label>
-                <select asp-for="BitisSaati" class="form-control">
-                    <option value="">Seçiniz</option>
-                    @for (int i = 9; i <= 17; i++)
-                    {
-                        for (int j = 0; j < 2; j++)
-                        {
-                            var time = $"{i:D2}:{j * 30:D2}:00";
-                            <option value="@time">@time</option>
-                        }
-                    }
-                </select>
-                <span asp-validation-for="BitisSaati" class="text-danger small"></span>
+                <label asp-for="BaslangicSaati" class="form-label">Başlangıç Saati</label>
+                <input asp-for="BaslangicSaati" type="TimeSpan" class="form-control" />
+                <span asp-validation-for="BaslangicSaati" class="text-danger small"></span>
+                <div class="form-group mb-3">
+                    <label asp-for="BitisSaati" class="form-label">Bitiş Saati</label>
+                    <input asp-for="BitisSaati" type="TimeSpan" class="form-control" />
+                    <span asp-validation-for="BitisSaati" class="text-danger small"></span>
+                </div>
             </div>
 
+            <div class="form-group d-grid mb-3">
+                <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i> Kaydet</button>
+            </div>
         </form>
     </div>
 </div>

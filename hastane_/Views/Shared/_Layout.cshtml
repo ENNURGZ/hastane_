@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject LanguageService language
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,7 +11,6 @@
     <link rel="stylesheet" href="~/hastane_.styles.css" asp-append-version="true" />
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -35,19 +35,21 @@
                 {
                     if (User.IsInRole("admin"))
                     {
-                        <a class="navbar-brand" asp-controller="Admin" asp-action="Index">ASEN HOSPITAL</a>
+                        <a class="navbar-brand" asp-controller="Admin" asp-action="Index">@language.GetKey("ASEN HASTANESİ")</a>
+                    }
+                    else if (User.IsInRole("doctor"))
+                    {
+                        <a class="navbar-brand" asp-controller="Doctor" asp-action="Index">@language.GetKey("ASEN HASTANESİ")</a>
                     }
                     else
-
                     {
-                        <a class="navbar-brand" asp-controller="Home" asp-action="Index">ASEN HOSPITAL</a>
-
+                        <a class="navbar-brand" asp-controller="Home" asp-action="Index">@language.GetKey("ASEN HASTANESİ")</a>
                     }
 
                 }
                 else
                 {
-                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">ASEN HOSPITAL</a>
+                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">@language.GetKey("ASEN HASTANESİ")</a>
 
                 }
                 <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded"
@@ -58,48 +60,39 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
 
-
+                        
 
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (User.IsInRole("admin"))
                             {
-
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded " asp-action="Index" asp-controller="Admin" role="button"
-                                       data-bs-toggle="dropdown" aria-expanded="false">
-                                        İşlemler
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a asp-action="AdminList" asp-controller="User" class="dropdown-item">Adminler</a></li>
-                                        <li><a asp-action="Index" asp-controller="User" class="dropdown-item">Kullanıcılar</a></li>
-                                        <li><a asp-action="DoctorList" asp-controller="User" class="dropdown-item">Doktorlar</a></li>
-                                        <li><a asp-action="RandevuList" asp-controller="Doctor" class="dropdown-item">Randevular</a></li>
-                                        <li><a asp-action="PoliklinikList" asp-controller="User" class="dropdown-item">Poliklinikler</a></li>
-                                    </ul>
-                                </li>
+                                <li class ="nav-item"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="AdminList" asp-controller="User">@language.GetKey("Adminler")</a></li>
+                                <li class="nav-item"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="Index" asp-controller="User">@language.GetKey("Kullanıcılar")</a></li>
+                                <li class="nav-item"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="DoctorList" asp-controller="User">@language.GetKey("Doktorlar")</a></li>
+                                <li class="nav-item"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="AdminRandevuListesi" asp-controller="Admin">@language.GetKey("Randevular")</a></li>
+                                <li class="nav-item"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-action="PoliklinikList" asp-controller="User">@language.GetKey("Departmanlar")</a></li>
                             }
 
                         if (User.IsInRole("doctor"))
                         {
                             <li class="nav-item">
-                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="" asp-action="">Randevular</a>
+                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Doctor" asp-action="DoctorRandevuListesi">@language.GetKey("Randevular")</a>
                             </li>
                             }
                             if (User.IsInRole("user"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="RandevuAl">Randevu Al</a>       
+                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="RandevuAl">@language.GetKey("Randevu Al")</a>       
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="User" asp-action="RandevuListesi">Randevularım</a>
+                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="User" asp-action="RandevuListesi">@language.GetKey("Randevularım")</a>
                                 </li>
                                 <li class="nav-item ms-auto">
-                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Profile">Profili Düzenle</a>
+                                    <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Profile">@language.GetKey("Profili Düzenle")</a>
                                 </li>
                             }
                             <li class="nav-item">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Logout">Çıkış Yap</a>
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Logout">@language.GetKey("Çıkış Yap")</a>
                             </li>
 
                         }
@@ -107,18 +100,32 @@
                         {
 
                             <li class="nav-item ms-auto">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#portfolio">Portfolio</a>
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#portfolio">@language.GetKey("Departmanlar")</a>
                             </li>
                             <li class="nav-item ms-auto">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#about">About</a>
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/#about">@language.GetKey("Hakkında")</a>
                             </li>
                             <li class="nav-item ms-auto">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Login">Giriş Yap</a>
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Login">@language.GetKey("Giriş Yap")</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Register">Kayıt Ol</a>
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Account" asp-action="Register">@language.GetKey("Kayıt Ol")</a>
                             </li>
                         }
+                        <div class="float-end d-flex flex-column align-items-center">
+                            <ul class="list-unstyled mb-0">
+                                <li class="d-inline">
+                                    <a asp-action="ChangeLanguage" asp-controller="Home" asp-route-culture="tr-TR" class="text-decoration-none text-white">Türkçe</a>
+                                </li>
+                            </ul>
+                            <hr class="text-white my-1 w-100">
+                            <ul class="list-unstyled mb-0">
+                                <li class="d-inline">
+                                    <a asp-action="ChangeLanguage" asp-controller="Home" asp-route-culture="en-US" class="text-decoration-none text-white">English</a>
+                                </li>
+                            </ul>
+                        </div>
+
                     </ul>
                 </div>
             </div>

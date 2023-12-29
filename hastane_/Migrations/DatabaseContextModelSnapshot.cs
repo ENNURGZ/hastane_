@@ -63,7 +63,7 @@ namespace hastane_.Migrations
                     b.HasData(
                         new
                         {
-                            AdminId = new Guid("60e85702-c987-482c-9aa5-fb40b2b0a312"),
+                            AdminId = new Guid("c21aa9c4-c56b-407d-bdda-3e9a2d6aae7b"),
                             Locked = false,
                             Name = "Ennur",
                             Password = "97CE14A55420C6F332C0A16644B1A47C",
@@ -84,6 +84,9 @@ namespace hastane_.Migrations
 
                     b.Property<TimeSpan>("BitisSaati")
                         .HasColumnType("time");
+
+                    b.Property<int>("CalismaGunu")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Locked")
                         .HasColumnType("bit");

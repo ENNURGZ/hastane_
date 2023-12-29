@@ -12,7 +12,6 @@ namespace hastane_
             CreateMap<Doctor, DoctorListViewModel>().ReverseMap();
             CreateMap<Doctor, DoctorDuzenleViewModel>().ReverseMap();
             CreateMap<Admin, AdminListViewModel>().ReverseMap();
-            CreateMap<Poliklinik, PoliklinikListViewModel>().ReverseMap();
-        }
+            CreateMap<Poliklinik, PoliklinikListViewModel>().ReverseMap();        }
     }
 }

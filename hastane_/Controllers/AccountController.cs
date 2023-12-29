@@ -27,7 +27,7 @@ namespace hastane_.Controllers
             _mapper = mapper;
             _languageService = languageService;
         }
-
+       
         [AllowAnonymous]
         public IActionResult Login()
         {

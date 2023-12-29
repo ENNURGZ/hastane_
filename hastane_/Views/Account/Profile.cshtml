@@ -1,5 +1,6 @@
-﻿﻿@{
-    ViewData["Title"] = "Profile";
+﻿@inject LanguageService language
+﻿@{
+    ViewData["Title"] = @language.GetKey("Profil");
 }
 
 
@@ -23,14 +24,14 @@
 
         <form method="post" asp-action="ProfileChangeUsername">
             <div class="form-group">
-                <label class="form-label small">Username</label>
+                <label class="form-label small">@language.GetKey("Kullanıcı Adı")</label>
                 <div class="input-group mb-3">
                     <input name="username" type="text" class="form-control" value="@ViewData["Username"]" />
-                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Save</button>
+                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>@language.GetKey("Kaydet")</button>
                 </div>
                 @if (ViewData["result"] != null && ViewData["result"] == "UsernameChanged")
                 {
-                    <span class="text-success small">Username updated.</span>
+                    <span class="text-success small">@language.GetKey("Kullanıcı adı güncellendi.")</span>
                 }
             </div>
 
@@ -38,14 +39,14 @@
 
         <form method="post" asp-action="ProfileChangePassword">
             <div class="form-group">
-                <label class="form-label small">New Password</label>
+                <label class="form-label small">@language.GetKey("Yeni Şifre")</label>
                 <div class="input-group">
                     <input name="password" type="password" class="form-control" />
-                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Save</button>
+                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>@language.GetKey("Kaydet")</button>
                 </div>
                 @if (ViewData["result"] != null && ViewData["result"] == "PasswordChanged")
                 {
-                    <span class="text-success small">Password updated.</span>
+                    <span class="text-success small">@language.GetKey("Şifre güncellendi.")</span>
                 }
             </div>
         </form>

@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Erişim Engellendi";
+﻿@inject LanguageService language
+@{
+    ViewData["Title"] = @language.GetKey("Erişim Engellendi");
 }
 
 
@@ -13,9 +14,9 @@
 
 <div class="row">
     <div class="col">
-        <h1 class="text-danger text-center">İlgili Sayfaya Erişiminiz Yoktur.</h1>        
+        <h1 class="text-danger text-center">@language.GetKey("İlgili Sayfaya Erişiminiz Yoktur.")</h1>        
         <div class="text-center">
-            <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Anasayfaya Gidiniz.</a>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-primary">@language.GetKey("Anasayfaya Gidiniz.")</a>
         </div>
     </div>
 </div>
