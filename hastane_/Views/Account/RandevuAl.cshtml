@@ -1,5 +1,4 @@
-﻿@inject LanguageService language
-@model hastane_.Models.RandevuAlViewModel
+﻿@model hastane_.Models.RandevuAlViewModel
 <script>
     $(document).ready(function () {
         $("#PoliklinikId").change(function () {
@@ -10,7 +9,7 @@
                 url: "/Account/GetDoctorsByPoliklinik",
                 data: { poliklinikId: poliklinikId },
                 success: function (data) {
-                    var options = '<option value="">@language.GetKey("Doktor Seçiniz")</option>';
+                    var options = '<option value="">Doktor Seçiniz</option>';
                     for (var i = 0; i < data.length; i++) {
                         options += '<option value="' + data[i].doctorId + '">' + data[i].fullName +
                             '</option>';
@@ -27,7 +26,7 @@
 
 
 
-<h2>@language.GetKey("Randevu Al")</h2>
+<h2>Randevu Al</h2>
 <br />
 
 @if (ViewData["result"] != null)
@@ -42,15 +41,13 @@
 
 <form asp-controller="Account" asp-action="RandevuAl" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
     <div class="form-group">
-        <label asp-for="RandevuGunu"></label>
-        <input asp-for="RandevuGunu" type="date" class="form-control" />
-        <span asp-validation-for="RandevuGunu" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="RandevuSaati"></label>
-        <input asp-for="RandevuSaati" type="time" class="form-control" />
-        <span asp-validation-for="RandevuSaati" class="text-danger"></span>
+        @Html.LabelFor(model => model.PoliklinikId, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.PoliklinikId, ViewBag.PoliklinikList as SelectList, "Select a Poliklinik", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PoliklinikId, "", new { @class = "text-danger" })
+        </div>
     </div>
 
     <div class="form-group">
@@ -58,8 +55,32 @@
         <select asp-for="DoctorId" asp-items="ViewBag.DoctorList" class="form-control"></select>
         <span asp-validation-for="DoctorId" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="RandevuGunu"></label>
+        <input asp-for="RandevuGunu" type="date" class="form-control" />
+        <span asp-validation-for="RandevuGunu" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RandevuSaati" class="control-label"></label>
+        <div>
+            @if (ViewBag.AvailableAppointmentTimes != null)
+            {
+                <select asp-for="RandevuSaati" class="form-control">
+                    @foreach (var time in ViewBag.AvailableAppointmentTimes)
+                    {
+                        <option value="@time">@time.ToString("hh\\:mm")</option>
+                    }
+                </select>
+            }
+            else
+            {
+                <span class="text-danger">Uygun randevu saatleri bulunamadı.</span>
+            }
+            <span asp-validation-for="RandevuSaati" class="text-danger"></span>
+        </div>
+    </div>
 
-    
+
 
     <br />
     <br />
